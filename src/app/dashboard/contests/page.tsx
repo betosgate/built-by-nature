@@ -1,72 +1,70 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Trophy, Heart, Clock, ArrowRight, Users } from "lucide-react";
+import { Trophy, Heart, Clock, ArrowRight, Users, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
-const myContests = [
-  {
-    id: "summer-glow-2026",
-    name: "Summer Glow 2026",
-    status: "Active",
-    votes: 3842,
-    rank: 1,
-    round: "Round 1: Open Entry",
-    totalEntrants: 342,
-    endsIn: "4d 12h",
-  },
-  {
-    id: "natural-beauty-classic",
-    name: "Natural Beauty Classic",
-    status: "Active",
-    votes: 2156,
-    rank: 5,
-    round: "Round 2: Top 20",
-    totalEntrants: 518,
-    endsIn: "1d 6h",
-  },
-  {
-    id: "fitness-physique-open",
-    name: "Fitness Physique Open",
-    status: "Active",
-    votes: 1204,
-    rank: 12,
-    round: "Round 1: Open Entry",
-    totalEntrants: 276,
-    endsIn: "6d 3h",
-  },
-];
+interface ContestEntry {
+  id: string;
+  status: string;
+  current_round: number;
+  vote_count: number;
+  created_at: string;
+  contests: {
+    id: string;
+    name: string;
+    status: string;
+    current_round: number;
+    total_rounds: number;
+    entry_deadline: string | null;
+  };
+}
 
-const pastContests = [
-  {
-    id: "tattoo-showcase",
-    name: "Tattoo Showcase",
-    status: "Completed",
-    votes: 5420,
-    rank: 3,
-    round: "Finished",
-    totalEntrants: 210,
-    prize: "$750",
-  },
-  {
-    id: "couple-goals",
-    name: "Couple Goals",
-    status: "Completed",
-    votes: 1890,
-    rank: 8,
-    round: "Finished",
-    totalEntrants: 145,
-    prize: null,
-  },
-];
-
-const statusColors: Record<string, string> = {
-  Active: "bg-green-500/20 text-green-400 border-green-500/30",
-  Completed: "bg-zinc-700/50 text-zinc-400 border-zinc-600/30",
-};
+function timeUntil(dateStr: string | null): string {
+  if (!dateStr) return "No deadline";
+  const diff = new Date(dateStr).getTime() - Date.now();
+  if (diff <= 0) return "Ended";
+  const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+  const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+  return `${days}d ${hours}h`;
+}
 
 export default function MyContestsPage() {
+  const [entries, setEntries] = useState<ContestEntry[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchEntries() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.ok) {
+          const data = await res.json();
+          setEntries(data.entries || []);
+        }
+      } catch {
+        console.error("Failed to load contests");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchEntries();
+  }, []);
+
+  const activeEntries = entries.filter((e) => e.status === "active");
+  const pastEntries = entries.filter(
+    (e) => e.status === "eliminated" || e.status === "winner"
+  );
+
+  if (loading) {
+    return (
+      <div className="flex h-96 items-center justify-center">
+        <Loader2 className="size-8 animate-spin text-amber-500" />
+      </div>
+    );
+  }
+
   return (
     <div className="p-6 lg:p-8">
       <div className="mb-8 flex items-center justify-between">
@@ -89,101 +87,112 @@ export default function MyContestsPage() {
       {/* Active Contests */}
       <div className="mb-8">
         <h2 className="text-lg font-bold mb-4">Active Contests</h2>
-        <div className="space-y-4">
-          {myContests.map((contest) => (
-            <div
-              key={contest.id}
-              className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <Link
-                      href={`/contests/${contest.id}`}
-                      className="text-lg font-semibold text-white hover:text-amber-400 transition-colors"
-                    >
-                      {contest.name}
-                    </Link>
-                    <Badge className={statusColors[contest.status]}>
-                      {contest.status}
-                    </Badge>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-                    <span>{contest.round}</span>
-                    <span className="flex items-center gap-1">
-                      <Users className="size-3" />
-                      Rank #{contest.rank} of {contest.totalEntrants}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="size-3" />
-                      Ends in {contest.endsIn}
-                    </span>
-                  </div>
-                </div>
-                <div className="flex items-center gap-6">
-                  <div className="text-right">
-                    <div className="flex items-center gap-1 text-xl font-bold text-white">
-                      <Heart className="size-4 text-amber-500" />
-                      {contest.votes.toLocaleString()}
+        {activeEntries.length === 0 ? (
+          <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
+            <Trophy className="mx-auto mb-3 size-10 text-zinc-600" />
+            <p className="text-zinc-400">No active contest entries.</p>
+            <Link href="/contests">
+              <Button className="mt-4 bg-amber-500 text-black hover:bg-amber-400">
+                Enter a Contest
+              </Button>
+            </Link>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {activeEntries.map((entry) => (
+              <div
+                key={entry.id}
+                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <Link
+                        href={`/contests/${entry.contests.id}`}
+                        className="text-lg font-semibold text-white hover:text-amber-400 transition-colors"
+                      >
+                        {entry.contests.name}
+                      </Link>
+                      <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
+                        Active
+                      </Badge>
                     </div>
-                    <span className="text-xs text-zinc-500">total votes</span>
+                    <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
+                      <span>
+                        Round {entry.contests.current_round} of{" "}
+                        {entry.contests.total_rounds}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Clock className="size-3" />
+                        Ends {timeUntil(entry.contests.entry_deadline)}
+                      </span>
+                    </div>
                   </div>
-                  <Link href={`/contests/${contest.id}`}>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-400"
-                    >
-                      View <ArrowRight className="ml-1 size-3" />
-                    </Button>
-                  </Link>
+                  <div className="flex items-center gap-6">
+                    <div className="text-right">
+                      <div className="flex items-center gap-1 text-xl font-bold text-white">
+                        <Heart className="size-4 text-amber-500" />
+                        {entry.vote_count.toLocaleString()}
+                      </div>
+                      <span className="text-xs text-zinc-500">total votes</span>
+                    </div>
+                    <Link href={`/contests/${entry.contests.id}`}>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        className="border-zinc-700 text-zinc-300 hover:border-amber-500 hover:text-amber-400"
+                      >
+                        View <ArrowRight className="ml-1 size-3" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Past Contests */}
-      <div>
-        <h2 className="text-lg font-bold mb-4">Past Contests</h2>
-        <div className="space-y-4">
-          {pastContests.map((contest) => (
-            <div
-              key={contest.id}
-              className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 opacity-75"
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <span className="text-lg font-semibold text-zinc-300">
-                      {contest.name}
-                    </span>
-                    <Badge className={statusColors[contest.status]}>
-                      {contest.status}
-                    </Badge>
-                  </div>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-zinc-500">
-                    <span>Final Rank: #{contest.rank} of {contest.totalEntrants}</span>
-                    {contest.prize && (
-                      <span className="text-amber-400 font-semibold">
-                        Won {contest.prize}
+      {pastEntries.length > 0 && (
+        <div>
+          <h2 className="text-lg font-bold mb-4">Past Contests</h2>
+          <div className="space-y-4">
+            {pastEntries.map((entry) => (
+              <div
+                key={entry.id}
+                className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-5 opacity-75"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <span className="text-lg font-semibold text-zinc-300">
+                        {entry.contests.name}
                       </span>
-                    )}
+                      <Badge
+                        className={
+                          entry.status === "winner"
+                            ? "bg-amber-500/20 text-amber-400 border-amber-500/30"
+                            : "bg-zinc-700/50 text-zinc-400 border-zinc-600/30"
+                        }
+                      >
+                        {entry.status === "winner" ? "Winner!" : "Completed"}
+                      </Badge>
+                    </div>
                   </div>
-                </div>
-                <div className="text-right">
-                  <div className="flex items-center gap-1 text-lg font-bold text-zinc-400">
-                    <Heart className="size-4" />
-                    {contest.votes.toLocaleString()}
+                  <div className="text-right">
+                    <div className="flex items-center gap-1 text-lg font-bold text-zinc-400">
+                      <Heart className="size-4" />
+                      {entry.vote_count.toLocaleString()}
+                    </div>
+                    <span className="text-xs text-zinc-500">final votes</span>
                   </div>
-                  <span className="text-xs text-zinc-500">final votes</span>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

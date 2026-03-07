@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Upload,
   Camera,
@@ -12,16 +12,16 @@ import {
   Trophy,
   CheckCircle,
   AlertCircle,
+  Loader2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
-const mockContests = [
-  { id: "summer-glow-2026", name: "Summer Glow 2026" },
-  { id: "natural-beauty-classic", name: "Natural Beauty Classic" },
-  { id: "fitness-physique-open", name: "Fitness Physique Open" },
-  { id: "couple-goals", name: "Couple Goals" },
-];
+interface Contest {
+  id: string;
+  name: string;
+  status: string;
+}
 
 export default function UploadPage() {
   const [fileType, setFileType] = useState<"photo" | "video">("photo");
@@ -32,6 +32,32 @@ export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
+  const [contests, setContests] = useState<Contest[]>([]);
+  const [loadingContests, setLoadingContests] = useState(true);
+
+  // Fetch real contests from DB
+  useEffect(() => {
+    async function fetchContests() {
+      try {
+        const res = await fetch("/api/contests?status=in_progress");
+        const data = await res.json();
+        if (data.contests) {
+          setContests(data.contests);
+        }
+        // Also fetch open contests
+        const res2 = await fetch("/api/contests?status=open");
+        const data2 = await res2.json();
+        if (data2.contests) {
+          setContests((prev) => [...prev, ...data2.contests]);
+        }
+      } catch {
+        console.error("Failed to fetch contests");
+      } finally {
+        setLoadingContests(false);
+      }
+    }
+    fetchContests();
+  }, []);
 
   const handleFile = (f: File | null) => {
     if (!f) return;
@@ -62,8 +88,12 @@ export default function UploadPage() {
       if (!response.ok) {
         setResult({ success: false, message: data.error || "Upload failed" });
       } else {
-        setResult({ success: true, message: "Content uploaded successfully!" });
-        // Reset form
+        setResult({
+          success: true,
+          message: data.contestEntryId
+            ? "Content uploaded and linked to your contest entry!"
+            : "Content uploaded successfully!",
+        });
         setFile(null);
         setCaption("");
         setIsPrivate(false);
@@ -253,24 +283,40 @@ export default function UploadPage() {
             <Trophy className="mb-0.5 mr-1 inline size-4 text-amber-500" />
             Assign to Contest (optional)
           </label>
-          <select
-            value={selectedContest}
-            onChange={(e) => setSelectedContest(e.target.value)}
-            className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
-          >
-            <option value="" className="bg-zinc-900">
-              No contest
-            </option>
-            {mockContests.map((contest) => (
-              <option
-                key={contest.id}
-                value={contest.id}
-                className="bg-zinc-900"
-              >
-                {contest.name}
+          {loadingContests ? (
+            <div className="flex items-center gap-2 rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
+              <Loader2 className="size-4 animate-spin" />
+              Loading contests...
+            </div>
+          ) : contests.length === 0 ? (
+            <div className="rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
+              No active contests available. Check back soon!
+            </div>
+          ) : (
+            <select
+              value={selectedContest}
+              onChange={(e) => setSelectedContest(e.target.value)}
+              className="w-full rounded-xl border border-zinc-700 bg-zinc-900/50 px-4 py-3 text-sm text-white transition-colors focus:border-amber-500 focus:outline-none focus:ring-1 focus:ring-amber-500/50"
+            >
+              <option value="" className="bg-zinc-900">
+                No contest — general upload
               </option>
-            ))}
-          </select>
+              {contests.map((contest) => (
+                <option
+                  key={contest.id}
+                  value={contest.id}
+                  className="bg-zinc-900"
+                >
+                  {contest.name} ({contest.status === "in_progress" ? "Active" : "Open for entries"})
+                </option>
+              ))}
+            </select>
+          )}
+          {selectedContest && (
+            <p className="mt-2 text-xs text-amber-400/70">
+              Selecting a contest will automatically enter you if you haven&apos;t already.
+            </p>
+          )}
         </div>
 
         {/* Upload Button */}
@@ -282,10 +328,7 @@ export default function UploadPage() {
         >
           {uploading ? (
             <span className="flex items-center gap-2">
-              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
-              </svg>
+              <Loader2 className="size-5 animate-spin" />
               Uploading...
             </span>
           ) : (

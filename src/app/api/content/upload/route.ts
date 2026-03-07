@@ -37,6 +37,42 @@ export async function POST(request: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
 
+    // If a contest is selected, find or create a contest entry
+    let contestEntryId: string | null = null;
+    if (contestId) {
+      // Check if user already has an entry for this contest
+      const { data: existingEntry } = await adminClient
+        .from("contest_entries")
+        .select("id")
+        .eq("user_id", user.id)
+        .eq("contest_id", contestId)
+        .single();
+
+      if (existingEntry) {
+        contestEntryId = existingEntry.id;
+      } else {
+        // Auto-create contest entry
+        const { data: newEntry, error: entryError } = await adminClient
+          .from("contest_entries")
+          .insert({
+            user_id: user.id,
+            contest_id: contestId,
+            status: "active",
+            current_round: 1,
+          })
+          .select("id")
+          .single();
+
+        if (entryError) {
+          console.error("Contest entry creation error:", entryError);
+          return NextResponse.json({
+            error: `Failed to enter contest: ${entryError.message}`,
+          }, { status: 500 });
+        }
+        contestEntryId = newEntry.id;
+      }
+    }
+
     // Generate unique path
     const ext = file.name.split(".").pop()?.toLowerCase() || "jpg";
     const timestamp = Date.now();
@@ -52,7 +88,6 @@ export async function POST(request: NextRequest) {
       });
       if (createBucketError) {
         console.error("Bucket creation error:", createBucketError);
-        // Continue anyway — bucket may already exist from a race condition
       }
     }
 
@@ -90,7 +125,7 @@ export async function POST(request: NextRequest) {
         is_private: isPrivate,
         is_18_plus: isPrivate,
         caption,
-        contest_entry_id: null, // TODO: link to real contest entries when contests are in DB
+        contest_entry_id: contestEntryId,
       })
       .select()
       .single();
@@ -103,7 +138,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({
       success: true,
       content,
-      message: "Content uploaded successfully",
+      contestEntryId,
+      message: contestEntryId
+        ? "Content uploaded and linked to contest entry"
+        : "Content uploaded successfully",
     });
   } catch (error) {
     console.error("Upload error:", error);
