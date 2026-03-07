@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import {
   Flame,
@@ -14,6 +17,7 @@ import {
   Clock,
   ChevronRight,
   Mail,
+  CheckCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Navbar } from "@/components/marketing/navbar";
@@ -99,6 +103,19 @@ const mockRecruits = [
 ];
 
 export default function RecruitPage() {
+  const [formData, setFormData] = useState({ name: "", email: "", social: "", approach: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitting(true);
+    // Simulate submission — in production this would call an API
+    await new Promise((r) => setTimeout(r, 1500));
+    setSubmitted(true);
+    setSubmitting(false);
+  };
+
   return (
     <main className="bg-black text-white">
       <Navbar />
@@ -390,56 +407,113 @@ export default function RecruitPage() {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-              <div className="space-y-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Full Name
-                  </label>
-                  <div className="bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-gray-500">
-                    Enter your full name
-                  </div>
+              {submitted ? (
+                <div className="text-center py-8">
+                  <CheckCircle className="h-16 w-16 text-green-400 mx-auto mb-4" />
+                  <h3 className="text-2xl font-bold mb-2">Application Submitted!</h3>
+                  <p className="text-gray-400 mb-6">
+                    Thanks, {formData.name}! We&apos;ll review your application and get back to you
+                    at <strong className="text-white">{formData.email}</strong> within 24 hours.
+                  </p>
+                  <Link href="/signup?role=recruiter">
+                    <Button className="bg-amber-500 text-black hover:bg-amber-400 font-semibold">
+                      Create Your Account Now
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label htmlFor="rec-name" className="block text-sm font-medium text-gray-300 mb-2">
+                      Full Name
+                    </label>
+                    <input
+                      id="rec-name"
+                      type="text"
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Enter your full name"
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"
+                    />
+                  </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email Address
-                  </label>
-                  <div className="flex gap-3">
-                    <div className="flex-1 bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-gray-500 flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-gray-600" />
-                      Enter your email
+                  <div>
+                    <label htmlFor="rec-email" className="block text-sm font-medium text-gray-300 mb-2">
+                      Email Address
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-600" />
+                      <input
+                        id="rec-email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        placeholder="Enter your email"
+                        className="w-full bg-black/50 border border-white/10 rounded-xl pl-11 pr-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"
+                      />
                     </div>
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Social Media Presence (optional)
-                  </label>
-                  <div className="bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-gray-500">
-                    Instagram, TikTok, X, or other
+                  <div>
+                    <label htmlFor="rec-social" className="block text-sm font-medium text-gray-300 mb-2">
+                      Social Media Presence <span className="text-gray-500">(optional)</span>
+                    </label>
+                    <input
+                      id="rec-social"
+                      type="text"
+                      value={formData.social}
+                      onChange={(e) => setFormData({ ...formData, social: e.target.value })}
+                      placeholder="Instagram, TikTok, X, or other"
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500"
+                    />
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    How will you recruit contestants?
-                  </label>
-                  <div className="bg-black/50 border border-white/10 rounded-xl px-4 py-3 h-24 text-gray-500">
-                    Tell us about your network and approach...
+                  <div>
+                    <label htmlFor="rec-approach" className="block text-sm font-medium text-gray-300 mb-2">
+                      How will you recruit contestants?
+                    </label>
+                    <textarea
+                      id="rec-approach"
+                      required
+                      rows={4}
+                      value={formData.approach}
+                      onChange={(e) => setFormData({ ...formData, approach: e.target.value })}
+                      placeholder="Tell us about your network and approach..."
+                      className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-gray-500 focus:outline-none focus:border-amber-500 resize-none"
+                    />
                   </div>
-                </div>
 
-                <Button className="w-full bg-amber-500 text-black hover:bg-amber-400 font-bold text-lg h-12">
-                  Apply to Recruit
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
+                  <Button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full bg-amber-500 text-black hover:bg-amber-400 font-bold text-lg h-12 disabled:opacity-50"
+                  >
+                    {submitting ? (
+                      <span className="flex items-center gap-2">
+                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                        </svg>
+                        Submitting...
+                      </span>
+                    ) : (
+                      <>
+                        Apply to Recruit
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </>
+                    )}
+                  </Button>
 
-                <p className="text-center text-gray-500 text-xs">
-                  By applying, you agree to our recruiter terms of service.
-                  We typically respond within 24 hours.
-                </p>
-              </div>
+                  <p className="text-center text-gray-500 text-xs">
+                    By applying, you agree to our{" "}
+                    <Link href="/terms" className="text-amber-500 hover:text-amber-400">terms of service</Link>.
+                    We typically respond within 24 hours.
+                  </p>
+                </form>
+              )}
             </div>
           </div>
         </div>
