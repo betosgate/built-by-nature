@@ -134,8 +134,8 @@ export default function ContestantProfilePage({
             <div>
               <h3 className="text-base font-bold text-green-400 mb-1">Contestants Earn 20% of Token Revenue</h3>
               <p className="text-sm text-zinc-400">
-                Every vote costs 1 token ($5). <strong className="text-white">{contestant.display_name}</strong> earns
-                20% of every dollar spent voting for her — that&apos;s <strong className="text-green-400">$1 per vote</strong>.
+                Each $5 token gives 5 votes. <strong className="text-white">{contestant.display_name}</strong> earns
+                20% of every token spent voting for her — that&apos;s <strong className="text-green-400">$1 per token</strong>.
                 Want to be a contestant?{" "}
                 <Link href="/signup?role=contestant" className="text-amber-400 hover:underline">Sign up here</Link>.
               </p>
@@ -216,10 +216,10 @@ export default function ContestantProfilePage({
               Vote for {contestant.display_name}
             </h2>
             <p className="mb-2 text-zinc-400">
-              Support your favorite contestant with tokens. Each vote costs 1 token ($5).
+              Support your favorite contestant with tokens. Each $5 token gives you 5 votes.
             </p>
             <p className="mb-6 text-sm text-green-400">
-              {contestant.display_name} earns $1 from every vote. Help her win!
+              {contestant.display_name} earns $1 from every token spent. Help her win!
             </p>
             <div className="mx-auto mb-6 flex max-w-sm items-center justify-center gap-2">
               {[1, 5, 10, 15, 20].map((amount) => (
@@ -231,7 +231,7 @@ export default function ContestantProfilePage({
                 </button>
               ))}
             </div>
-            <p className="text-xs text-zinc-600 mb-4">Max 20 votes per day per contestant</p>
+            <p className="text-xs text-zinc-600 mb-4">Max 20 tokens (100 votes) per day per contestant</p>
             <Link href="/signup">
               <Button className="bg-amber-500 text-black hover:bg-amber-400 px-8 h-12 font-bold text-lg">
                 <Heart className="size-5" />

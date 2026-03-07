@@ -256,7 +256,7 @@ export default function ContestDetailPage() {
                   "Must be 18+ with age verification",
                   "Natural beauty only — no cosmetic surgery or fillers",
                   "Tattoos and piercings welcome",
-                  "Voting: $5 per token, max 20 votes/day/contestant",
+                  "Voting: $5 per token (5 votes each), max 20 tokens/day/contestant",
                   "Contestants earn 20% of token revenue",
                   "Cheating = instant disqualification",
                 ].map((rule, i) => (

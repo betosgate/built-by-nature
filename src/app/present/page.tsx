@@ -604,7 +604,7 @@ function buildSlides(): Slide[] {
         <div className="max-w-3xl mx-auto h-full space-y-6 overflow-y-auto">
           <div>
             <h3 className="text-xl font-bold">Buy Tokens</h3>
-            <p className="text-sm text-zinc-400">Tokens are used to vote for your favorite contestants. Each vote costs 1 token.</p>
+            <p className="text-sm text-zinc-400">Tokens are used to vote for your favorite contestants. Each $5 token gives you 5 votes.</p>
           </div>
           <div className="bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 rounded-2xl p-5 flex items-center gap-4">
             <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center">

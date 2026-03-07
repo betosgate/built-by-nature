@@ -239,8 +239,8 @@ export default function TermsPage() {
                     This daily cap resets at midnight UTC.
                   </li>
                   <li>
-                    Each vote consumes one (1) token from your account balance. Tokens are
-                    permanently consumed upon casting a vote and cannot be recovered, refunded,
+                    Each token provides five (5) votes. Tokens are
+                    permanently consumed upon casting votes and cannot be recovered, refunded,
                     or reversed.
                   </li>
                   <li>

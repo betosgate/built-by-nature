@@ -36,7 +36,7 @@ export default function BuyTokensPage() {
       <div>
         <h1 className="text-2xl font-bold text-white mb-2">Buy Tokens</h1>
         <p className="text-gray-400">
-          Tokens are used to vote for your favorite contestants. Each vote costs 1 token.
+          Tokens are used to vote for your favorite contestants. Each $5 token gives you 5 votes to use on any contestant.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export default function BuyTokensPage() {
               ${bundle.price}
             </div>
             <div className="text-xs text-gray-500 mt-1">
-              ${(bundle.price / bundle.amount).toFixed(2)} per token
+              ${(bundle.price / bundle.amount).toFixed(2)}/token ({bundle.amount * 5} votes)
             </div>
           </button>
         ))}

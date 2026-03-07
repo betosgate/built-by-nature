@@ -162,15 +162,15 @@ export default function RulesPage() {
               <div className="text-4xl font-bold text-amber-400 mb-3">$5</div>
               <h3 className="text-lg font-semibold mb-2">Per Token</h3>
               <p className="text-gray-400">
-                Fans purchase voting tokens at $5 each. Each token equals one vote
-                for the contestant of your choice.
+                Fans purchase voting tokens at $5 each. Each token gives you 5 votes
+                to use on any contestant of your choice.
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
               <div className="text-4xl font-bold text-amber-400 mb-3">20</div>
-              <h3 className="text-lg font-semibold mb-2">Max Votes / Day</h3>
+              <h3 className="text-lg font-semibold mb-2">Max Tokens / Day</h3>
               <p className="text-gray-400">
-                Each fan can cast a maximum of 20 votes per contestant per day.
+                Each fan can spend a maximum of 20 tokens (100 votes) per contestant per day.
                 This keeps the competition fair and prevents vote flooding.
               </p>
             </div>

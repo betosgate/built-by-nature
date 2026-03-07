@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   Flame,
@@ -70,6 +71,14 @@ export default function AboutPage() {
 
       {/* Hero */}
       <section className="relative pt-32 pb-20 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=600&fit=crop"
+          alt="Beautiful beach landscape"
+          fill
+          className="object-cover opacity-30"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black" />
         <div className="absolute inset-0 bg-gradient-to-b from-amber-500/10 via-transparent to-transparent" />
         <div className="absolute top-20 right-0 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-orange-500/5 rounded-full blur-3xl" />
@@ -116,6 +125,50 @@ export default function AboutPage() {
                 only requirement and fans decide who wins.
               </p>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contestant Photo Strip */}
+      <section className="py-16 bg-gray-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {[
+              {
+                src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=400&h=500&fit=crop",
+                label: "Natural Beauty",
+              },
+              {
+                src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=500&fit=crop",
+                label: "Authentic",
+              },
+              {
+                src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=500&fit=crop",
+                label: "Real",
+              },
+              {
+                src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&h=500&fit=crop",
+                label: "Confident",
+              },
+            ].map((photo) => (
+              <div
+                key={photo.label}
+                className="relative aspect-[3/4] rounded-xl overflow-hidden group"
+              >
+                <Image
+                  src={photo.src}
+                  alt={photo.label}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 right-0 p-4">
+                  <span className="text-white font-semibold text-lg tracking-wide">
+                    {photo.label}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -252,8 +305,15 @@ export default function AboutPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 bg-gray-950">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative py-20 overflow-hidden">
+        <Image
+          src="https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=1920&h=600&fit=crop"
+          alt="Ocean sunset"
+          fill
+          className="object-cover opacity-25"
+        />
+        <div className="absolute inset-0 bg-black/60" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Flame className="h-12 w-12 text-amber-500 mx-auto mb-6" />
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             Join the Movement
