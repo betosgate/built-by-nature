@@ -130,13 +130,13 @@ export default function ContestsPage() {
               {
                 name: "Ink & Beauty",
                 description: "Tattoo showcase meets beauty contest. Show off your body art in its full glory.",
-                image: "https://images.unsplash.com/photo-1611501275019-9b5cda994e8d?w=600&h=400&fit=crop",
+                image: "https://images.unsplash.com/photo-7cJaMs46tYs?w=600&h=400&fit=crop",
                 status: "Coming Soon",
               },
               {
                 name: "Fitness Natural",
                 description: "For fitness enthusiasts and athletes. Showcase your natural physique and training results.",
-                image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop",
+                image: "https://images.unsplash.com/photo-QmktCddNtPA?w=600&h=400&fit=crop",
                 status: "Coming Soon",
               },
               {

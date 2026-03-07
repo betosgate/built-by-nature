@@ -1,0 +1,4 @@
+[    1051ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://built-by-nature.vercel.app/dashboard/profile?_rsc=15c5a:0
+[    1052ms] [ERROR] Failed to load resource: the server responded with a status of 404 () @ https://built-by-nature.vercel.app/dashboard/settings?_rsc=15c5a:0
+[   47138ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://built-by-nature.vercel.app/api/content/upload:0
+[   68660ms] [ERROR] Failed to load resource: the server responded with a status of 500 () @ https://built-by-nature.vercel.app/api/content/upload:0
