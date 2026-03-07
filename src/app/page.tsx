@@ -181,6 +181,40 @@ export default function HomePage() {
       {/* ===== STATS BAR ===== */}
       <StatsBar />
 
+      {/* ===== WHAT IS BUILT BY NATURE? ===== */}
+      <section className="py-24 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent" />
+        <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <Sparkles className="mx-auto mb-4 h-8 w-8 text-amber-500" />
+            <h2 className="text-3xl sm:text-5xl font-bold mb-6">
+              What Is <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">Built by Nature</span>?
+            </h2>
+          </div>
+          <div className="space-y-6 text-lg leading-relaxed text-gray-300">
+            <p>
+              Built by Nature is a competition that celebrates women who are beautiful and sexy{" "}
+              <strong className="text-white">exactly as nature made them</strong>. No lip fillers. No butt lifts.
+              No breast augmentation. No cosmetic surgery of any kind. In a world obsessed with artificial
+              enhancements, we believe the most stunning women are the ones who haven&apos;t been altered.
+            </p>
+            <p>
+              Tattoos and piercings? Absolutely welcome. Those are expressions of personality, not
+              augmentations. We celebrate ink, metal, curves, freckles, stretch marks &mdash; everything
+              that makes you <em>you</em>. If your beauty is natural, you belong here.
+            </p>
+          </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
+            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400">No Cosmetic Surgery</span>
+            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400">No Fillers</span>
+            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm font-medium text-amber-400">No Augmentation</span>
+            <span className="rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400">Tattoos OK</span>
+            <span className="rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400">Piercings OK</span>
+            <span className="rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-sm font-medium text-green-400">All Body Types</span>
+          </div>
+        </div>
+      </section>
+
       {/* ===== SECTION 2: COMPETITION STATUS BAR ===== */}
       <section className="bg-zinc-900 border-t-2 border-amber-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
