@@ -16,14 +16,14 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p2",
-        url: "https://images.unsplash.com/photo-1506929562872-bb421503ef21?w=600&h=800&fit=crop",
-        caption: "Sunset session",
+        url: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=800&fit=crop",
+        caption: "Sunset bikini session",
         is_private: false,
       },
       {
         id: "p3",
-        url: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=600&h=800&fit=crop",
-        caption: "Poolside",
+        url: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop",
+        caption: "Poolside glow",
         is_private: false,
       },
     ],
@@ -45,13 +45,13 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p5",
-        url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop",
-        caption: "Summer days",
+        url: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop",
+        caption: "Summer bikini days",
         is_private: false,
       },
       {
         id: "p6",
-        url: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?w=600&h=800&fit=crop",
         caption: "Natural glow",
         is_private: false,
       },
@@ -80,8 +80,8 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p9",
-        url: "https://images.unsplash.com/photo-1502767089025-6572583495f9?w=600&h=800&fit=crop",
-        caption: "Golden hour",
+        url: "https://images.unsplash.com/photo-1519824145371-296894a0daa9?w=600&h=800&fit=crop",
+        caption: "Beach goddess",
         is_private: false,
       },
     ],
@@ -104,12 +104,12 @@ export const MOCK_CONTESTANTS = [
       {
         id: "p11",
         url: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&h=800&fit=crop",
-        caption: "City vibes",
+        caption: "Swimwear vibes",
         is_private: false,
       },
       {
         id: "p12",
-        url: "https://images.unsplash.com/photo-1464863979621-258859e62245?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=600&h=800&fit=crop",
         caption: "All natural everything",
         is_private: false,
       },
@@ -132,13 +132,13 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p14",
-        url: "https://images.unsplash.com/photo-1523264653568-d3d4013fd18a?w=600&h=800&fit=crop",
-        caption: "Cali sunshine",
+        url: "https://images.unsplash.com/photo-1505483531331-fc3cf43fd0c1?w=600&h=800&fit=crop",
+        caption: "Cali sunshine bikini",
         is_private: false,
       },
       {
         id: "p15",
-        url: "https://images.unsplash.com/photo-1505483531331-fc3cf43fd0c1?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1523264653568-d3d4013fd18a?w=600&h=800&fit=crop",
         caption: "Natural beauty",
         is_private: false,
       },
@@ -168,7 +168,7 @@ export const MOCK_CONTESTANTS = [
       {
         id: "p18",
         url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=800&fit=crop",
-        caption: "Rooftop vibes",
+        caption: "Beach day",
         is_private: false,
       },
     ],
@@ -190,8 +190,8 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p20",
-        url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop",
-        caption: "Lakeside",
+        url: "https://images.unsplash.com/photo-1464863979621-258859e62245?w=600&h=800&fit=crop",
+        caption: "Lakeside bikini",
         is_private: false,
       },
       {
@@ -225,7 +225,7 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p24",
-        url: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop",
         caption: "Tropical vibes",
         is_private: false,
       },

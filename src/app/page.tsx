@@ -9,41 +9,41 @@ import { Footer } from "@/components/marketing/footer";
 const contestantImages = [
   {
     src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop",
-    alt: "Natural beauty contestant at beach",
+    alt: "Bikini beauty at the beach",
   },
   {
-    src: "https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?w=600&h=800&fit=crop",
-    alt: "Woman with tattoos posing confidently",
+    src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=800&fit=crop",
+    alt: "Swimwear model posing on the sand",
   },
   {
-    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop",
-    alt: "Natural beauty portrait",
+    src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop",
+    alt: "Confident woman in bikini",
   },
   {
-    src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=800&fit=crop",
-    alt: "Confident woman natural look",
+    src: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop",
+    alt: "Beach bikini natural beauty",
   },
   {
-    src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=800&fit=crop",
-    alt: "Beach beauty natural",
+    src: "https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?w=600&h=800&fit=crop",
+    alt: "Swimwear beach goddess",
   },
   {
-    src: "https://images.unsplash.com/photo-1496440737103-cd596325d314?w=600&h=800&fit=crop",
-    alt: "Woman embracing natural beauty",
+    src: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop",
+    alt: "Bikini beauty golden hour",
   },
 ];
 
 const marqueeContestants = [
-  { src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", name: "Sophia M.", votes: "12.4k" },
-  { src: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop", name: "Ava R.", votes: "11.8k" },
+  { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", name: "Sophia M.", votes: "12.4k" },
+  { src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=800&fit=crop", name: "Ava R.", votes: "11.8k" },
   { src: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop", name: "Isabella K.", votes: "10.2k" },
-  { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", name: "Mia L.", votes: "9.7k" },
-  { src: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&h=800&fit=crop", name: "Luna W.", votes: "9.1k" },
-  { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", name: "Aria J.", votes: "8.6k" },
-  { src: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=800&fit=crop", name: "Elena T.", votes: "8.2k" },
-  { src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop", name: "Chloe B.", votes: "7.9k" },
+  { src: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop", name: "Mia L.", votes: "9.7k" },
+  { src: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop", name: "Luna W.", votes: "9.1k" },
+  { src: "https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?w=600&h=800&fit=crop", name: "Aria J.", votes: "8.6k" },
+  { src: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&h=800&fit=crop", name: "Elena T.", votes: "8.2k" },
+  { src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop", name: "Chloe B.", votes: "7.9k" },
   { src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=800&fit=crop", name: "Zara F.", votes: "7.5k" },
-  { src: "https://images.unsplash.com/photo-1496440737103-cd596325d314?w=600&h=800&fit=crop", name: "Nova D.", votes: "7.1k" },
+  { src: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=600&h=800&fit=crop", name: "Nova D.", votes: "7.1k" },
 ];
 
 const topContestants = [
@@ -114,11 +114,11 @@ const steps = [
 ];
 
 const mosaicImages = [
-  { src: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&h=800&fit=crop", alt: "Beauty contestant" },
-  { src: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop", alt: "Natural portrait" },
+  { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", alt: "Bikini beach beauty" },
+  { src: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=800&fit=crop", alt: "Swimwear model" },
   { src: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=600&fit=crop", alt: "Tropical beach" },
-  { src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop", alt: "Confident woman" },
-  { src: "https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?w=600&h=800&fit=crop", alt: "Bold beauty" },
+  { src: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop", alt: "Bikini confident woman" },
+  { src: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop", alt: "Beach bikini beauty" },
   { src: "https://images.unsplash.com/photo-1476673160081-cf065607f449?w=1920&h=600&fit=crop", alt: "Beach sunset" },
 ];
 
