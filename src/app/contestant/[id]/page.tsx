@@ -56,8 +56,8 @@ export default function ContestantProfilePage({
   const contestant = MOCK_CONTESTANTS[0]; // Default to first contestant for demo
   const privatePhotos = [
     "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=500&fit=crop",
-    "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=400&h=500&fit=crop",
-    "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=400&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1600980979121-9dea33866719?w=400&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1608460457909-d2c153f97f90?w=400&h=500&fit=crop",
   ];
 
   return (

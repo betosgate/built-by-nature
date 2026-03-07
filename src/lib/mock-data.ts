@@ -22,7 +22,7 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p3",
-        url: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1600980979121-9dea33866719?w=600&h=800&fit=crop",
         caption: "Poolside glow",
         is_private: false,
       },
@@ -45,7 +45,7 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p5",
-        url: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1608460457909-d2c153f97f90?w=600&h=800&fit=crop",
         caption: "Summer bikini days",
         is_private: false,
       },
