@@ -1,15 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { Coins, Check, Zap, ShieldCheck } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Coins, Check, Zap, ShieldCheck, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { TOKEN_BUNDLES } from "@/lib/constants";
 
 export default function BuyTokensPage() {
   const [selectedBundle, setSelectedBundle] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [currentBalance, setCurrentBalance] = useState<number | null>(null);
+  const [balanceLoading, setBalanceLoading] = useState(true);
 
-  const currentBalance = 12; // TODO: fetch from supabase
+  useEffect(() => {
+    async function fetchBalance() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.ok) {
+          const data = await res.json();
+          setCurrentBalance(data.stats?.tokensBalance ?? 0);
+        }
+      } catch {
+        // Silently fail; show 0
+        setCurrentBalance(0);
+      } finally {
+        setBalanceLoading(false);
+      }
+    }
+    fetchBalance();
+  }, []);
 
   async function handlePurchase() {
     setLoading(true);
@@ -48,7 +66,13 @@ export default function BuyTokensPage() {
           </div>
           <div>
             <div className="text-sm text-amber-400">Current Balance</div>
-            <div className="text-3xl font-bold text-white">{currentBalance} Tokens</div>
+            <div className="text-3xl font-bold text-white">
+              {balanceLoading ? (
+                <Loader2 className="size-6 animate-spin text-amber-500 inline-block" />
+              ) : (
+                <>{currentBalance} Tokens</>
+              )}
+            </div>
           </div>
         </div>
       </div>
