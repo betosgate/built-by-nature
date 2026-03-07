@@ -36,6 +36,11 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Service</Link></li>
               <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/cookies" className="hover:text-white transition-colors">Cookie Policy</Link></li>
+              <li><Link href="/acceptable-use" className="hover:text-white transition-colors">Acceptable Use</Link></li>
+              <li><Link href="/dmca" className="hover:text-white transition-colors">DMCA Policy</Link></li>
+              <li><Link href="/compliance" className="hover:text-white transition-colors">2257 Compliance</Link></li>
+              <li><Link href="/complaints" className="hover:text-white transition-colors">Complaints</Link></li>
               <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
               <li><a href="mailto:support@builtbynature.com" className="hover:text-white transition-colors">Contact</a></li>
             </ul>
