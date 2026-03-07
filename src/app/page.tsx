@@ -1,11 +1,15 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Flame, Trophy, Users, DollarSign, Camera, Vote, Shield, ArrowRight, Crown, Heart, Star, Clock, Award, Plane, MapPin } from "lucide-react";
+import { Flame, Trophy, Users, DollarSign, Camera, Vote, Shield, ArrowRight, Crown, Heart, Star, Plane, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
 import { TrendingContestants } from "@/components/marketing/trending-contestants";
+import { CountdownTimer } from "@/components/marketing/countdown-timer";
+import { StatsBar } from "@/components/marketing/stats-bar";
+import { Testimonials } from "@/components/marketing/testimonials";
+import { FAQSection } from "@/components/marketing/faq-section";
 
 const contestantImages = [
   { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", alt: "Bikini beauty at the beach" },
@@ -17,10 +21,7 @@ const contestantImages = [
 ];
 
 export default function HomePage() {
-  const competitionStart = new Date("2026-04-01T00:00:00");
   const now = new Date();
-  const daysUntilStart = Math.max(0, Math.ceil((competitionStart.getTime() - now.getTime()) / (1000 * 60 * 60 * 24)));
-
   const currentMonth = now.getMonth(); // 0-indexed
 
   const calendarPhases = [
@@ -80,11 +81,9 @@ export default function HomePage() {
                 The premier natural beauty competition. Three rounds. 90 days. One winner.
               </p>
 
-              <div className="flex items-center gap-3 mb-8">
-                <Clock className="h-5 w-5 text-amber-500" />
-                <span className="text-lg font-semibold text-amber-400">
-                  {daysUntilStart} days until competition starts
-                </span>
+              <div className="mb-8">
+                <p className="text-sm text-zinc-500 mb-3 uppercase tracking-wider font-medium">Competition starts in</p>
+                <CountdownTimer targetDate="2026-04-01T00:00:00" />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -114,6 +113,10 @@ export default function HomePage() {
                 <div className="flex items-center gap-2">
                   <DollarSign className="h-4 w-4 text-amber-500/70" />
                   <span>Contestants Earn 20%</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-amber-500/70" />
+                  <span>Tattoos &amp; Piercings Welcome</span>
                 </div>
               </div>
             </div>
@@ -170,6 +173,9 @@ export default function HomePage() {
 
       {/* ===== TRENDING CONTESTANTS ===== */}
       <TrendingContestants />
+
+      {/* ===== STATS BAR ===== */}
+      <StatsBar />
 
       {/* ===== SECTION 2: COMPETITION STATUS BAR ===== */}
       <section className="bg-zinc-900 border-t-2 border-amber-500">
@@ -566,6 +572,12 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== TESTIMONIALS ===== */}
+      <Testimonials />
+
+      {/* ===== FAQ ===== */}
+      <FAQSection />
+
       {/* ===== SECTION 8: FINAL CTA ===== */}
       <section className="py-24 bg-black relative overflow-hidden">
         {/* Background collage effect */}
@@ -620,6 +632,10 @@ export default function HomePage() {
             <div className="flex items-center gap-2">
               <DollarSign className="h-4 w-4 text-amber-500/60" />
               <span>Contestants Earn 20%</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Heart className="h-4 w-4 text-amber-500/60" />
+              <span>All Body Types Welcome</span>
             </div>
           </div>
         </div>

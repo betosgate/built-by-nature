@@ -12,8 +12,8 @@ export function Footer() {
               <span className="text-lg font-bold text-white">Built by Nature</span>
             </Link>
             <p className="text-sm max-w-md">
-              The contest platform celebrating real, natural beauty. No filters,
-              no fakes — just you. Tattoos and piercings welcome.
+              The premier natural beauty competition. No filters, no fakes — just you.
+              All body types, tattoos, and piercings welcome. Real beauty, real prizes, real earnings.
             </p>
           </div>
 

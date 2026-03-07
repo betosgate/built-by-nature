@@ -9,6 +9,7 @@ const navLinks = [
   { href: "/contests", label: "Competitions" },
   { href: "/explore", label: "Explore" },
   { href: "/contestants", label: "Contestants" },
+  { href: "/leaderboard", label: "Leaderboard" },
   { href: "/recruit", label: "Recruit" },
 ];
 
