@@ -6,10 +6,10 @@ import { Menu, X, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-  { href: "/contests", label: "Contests" },
-  { href: "/rules", label: "Rules" },
-  { href: "/recruit", label: "Become a Recruiter" },
-  { href: "/about", label: "About" },
+  { href: "/contests", label: "Competitions" },
+  { href: "/explore", label: "Explore" },
+  { href: "/contestants", label: "Contestants" },
+  { href: "/recruit", label: "Recruit" },
 ];
 
 export function Navbar() {
