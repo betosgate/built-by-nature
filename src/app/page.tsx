@@ -290,8 +290,8 @@ export default function HomePage() {
           </div>
 
           {/* Prize callout cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            {/* 1st Place */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+            {/* Top 3 — Vegas Trip */}
             <div className="group relative rounded-2xl overflow-hidden border border-amber-500/30 hover:border-amber-500/60 transition-all duration-300">
               <div className="relative h-48 overflow-hidden">
                 <Image
@@ -299,76 +299,52 @@ export default function HomePage() {
                   alt="Las Vegas strip at night"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute top-4 left-4">
                   <Badge className="bg-amber-500 text-black border-none font-bold">
-                    <Crown className="h-3 w-3 mr-1" /> 1st Place
+                    <Trophy className="h-3 w-3 mr-1" /> Top 3
                   </Badge>
                 </div>
               </div>
               <div className="p-5 bg-zinc-900/80">
                 <div className="flex items-center gap-2 text-amber-400 mb-1">
                   <Plane className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-wider">Grand Prize</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">All Three Finalists</span>
                 </div>
                 <h3 className="text-lg font-bold mb-1">Las Vegas VIP Experience</h3>
                 <p className="text-gray-400 text-xs">
-                  Luxury suite, VIP access, pro photoshoot &amp; $5,000 cash.
+                  All-expenses-paid Vegas trip for the final round. Luxury suite, VIP access, and professional photoshoot.
                 </p>
               </div>
             </div>
 
-            {/* 2nd Place */}
-            <div className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition-all duration-300">
+            {/* Winner — Italy + $10k */}
+            <div className="group relative rounded-2xl overflow-hidden border border-amber-500/30 hover:border-amber-500/60 transition-all duration-300">
               <div className="relative h-48 overflow-hidden">
                 <Image
                   src="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=800&h=500&fit=crop"
                   alt="Venice Italy canals"
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                 <div className="absolute top-4 left-4">
-                  <Badge className="bg-gray-300 text-black border-none font-bold">
-                    <Award className="h-3 w-3 mr-1" /> 2nd Place
+                  <Badge className="bg-amber-500 text-black border-none font-bold">
+                    <Crown className="h-3 w-3 mr-1" /> Grand Prize Winner
                   </Badge>
                 </div>
               </div>
               <div className="p-5 bg-zinc-900/80">
                 <div className="flex items-center gap-2 text-amber-400 mb-1">
                   <Plane className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-wider">Runner-Up</span>
+                  <span className="text-xs font-semibold uppercase tracking-wider">Winner Takes All</span>
                 </div>
-                <h3 className="text-lg font-bold mb-1">Italian Dream Vacation</h3>
+                <h3 className="text-lg font-bold mb-1">Italy Vacation + $10,000 Cash</h3>
                 <p className="text-gray-400 text-xs">
-                  7-day luxury trip: Rome, Florence, Venice &amp; $3,000 cash.
-                </p>
-              </div>
-            </div>
-
-            {/* 3rd Place */}
-            <div className="group relative rounded-2xl overflow-hidden border border-white/10 hover:border-amber-500/30 transition-all duration-300">
-              <div className="relative h-48 overflow-hidden bg-gradient-to-br from-amber-900/30 to-zinc-900">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <DollarSign className="h-24 w-24 text-amber-500/20" />
-                </div>
-                <div className="absolute top-4 left-4">
-                  <Badge className="bg-amber-700 text-white border-none font-bold">
-                    <Star className="h-3 w-3 mr-1" /> 3rd Place
-                  </Badge>
-                </div>
-              </div>
-              <div className="p-5 bg-zinc-900/80">
-                <div className="flex items-center gap-2 text-amber-400 mb-1">
-                  <DollarSign className="h-4 w-4" />
-                  <span className="text-xs font-semibold uppercase tracking-wider">Cash Prize</span>
-                </div>
-                <h3 className="text-lg font-bold mb-1">$1,000 Cash Prize</h3>
-                <p className="text-gray-400 text-xs">
-                  $1,000 direct payment plus a feature on our social channels.
+                  7-day luxury Italian vacation for two — Rome, Florence, Venice — plus $10,000 cash prize.
                 </p>
               </div>
             </div>
@@ -443,7 +419,7 @@ export default function HomePage() {
               </div>
               <h3 className="text-2xl font-bold mb-2">Enter as a Contestant</h3>
               <p className="text-gray-400 text-sm leading-relaxed mb-6 flex-1">
-                Earn 20% of every vote. Win incredible prizes including trips to Las Vegas and Italy. Build your fanbase and showcase your natural beauty.
+                Earn 20% of every vote. Top 3 win a Vegas trip. The winner gets Italy + $10,000 cash. Build your fanbase and showcase your natural beauty.
               </p>
               <Link href="/signup/contestant">
                 <Button className="w-full bg-amber-500 text-black hover:bg-amber-400 font-bold h-12 shadow-lg shadow-amber-500/20">
