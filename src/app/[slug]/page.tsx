@@ -151,7 +151,7 @@ export default function VanityProfilePage() {
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      <main className="mx-auto max-w-5xl px-4 pt-6 pb-16 sm:px-6">
+      <main className="mx-auto max-w-5xl px-4 pt-24 pb-16 sm:px-6">
 
         {/* ============ HERO: Big photo + name + vote button ============ */}
         <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-start">
