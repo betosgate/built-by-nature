@@ -90,7 +90,7 @@ export async function POST(request: NextRequest) {
         is_private: isPrivate,
         is_18_plus: isPrivate,
         caption,
-        contest_entry_id: contestId || null,
+        contest_entry_id: null, // TODO: link to real contest entries when contests are in DB
       })
       .select()
       .single();
