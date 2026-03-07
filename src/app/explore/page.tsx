@@ -11,7 +11,7 @@ import { Footer } from "@/components/marketing/footer";
 
 interface ContentItem {
   id: string;
-  file_type: string;
+  type: string;
   storage_path: string;
   public_url: string;
   caption: string;
@@ -33,15 +33,14 @@ interface PaginationInfo {
   totalPages: number;
 }
 
-const FILTER_OPTIONS = [
-  { label: "All", value: "" },
-  { label: "Summer 2026", value: "summer-2026" },
-  { label: "Winter 2026", value: "winter-2026" },
-];
+interface ContestOption {
+  label: string;
+  value: string;
+}
 
 const SORT_OPTIONS = [
   { label: "Newest", value: "newest" },
-  { label: "Most Popular", value: "popular" },
+  { label: "Trending", value: "trending" },
 ];
 
 export default function ExplorePage() {
@@ -54,6 +53,32 @@ export default function ExplorePage() {
   const [activeFilter, setActiveFilter] = useState("");
   const [activeSort, setActiveSort] = useState("newest");
   const [page, setPage] = useState(1);
+  const [filterOptions, setFilterOptions] = useState<ContestOption[]>([
+    { label: "All", value: "" },
+  ]);
+
+  // Fetch real contests for filter buttons
+  useEffect(() => {
+    async function fetchContests() {
+      try {
+        const res = await fetch("/api/contests");
+        if (res.ok) {
+          const data = await res.json();
+          const contests = data.contests || data || [];
+          const options: ContestOption[] = [{ label: "All", value: "" }];
+          for (const contest of contests) {
+            if (contest.id && contest.title) {
+              options.push({ label: contest.title, value: contest.id });
+            }
+          }
+          setFilterOptions(options);
+        }
+      } catch (err) {
+        console.error("Failed to fetch contests:", err);
+      }
+    }
+    fetchContests();
+  }, []);
 
   // Debounce search input
   useEffect(() => {
@@ -117,6 +142,10 @@ export default function ExplorePage() {
     }
   };
 
+  const isVideoType = (type: string) => {
+    return type?.startsWith("video/") || type === "video";
+  };
+
   return (
     <div className="min-h-screen bg-black text-white">
       <Navbar />
@@ -149,7 +178,7 @@ export default function ExplorePage() {
         <div className="mb-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           {/* Filter Buttons */}
           <div className="flex flex-wrap gap-2">
-            {FILTER_OPTIONS.map((filter) => (
+            {filterOptions.map((filter) => (
               <button
                 key={filter.value}
                 onClick={() => setActiveFilter(filter.value)}
@@ -218,7 +247,15 @@ export default function ExplorePage() {
                   className="group relative overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900/50 transition-all hover:border-amber-500/30 hover:shadow-lg hover:shadow-amber-500/5"
                 >
                   <div className="relative aspect-[3/4] w-full overflow-hidden">
-                    {item.public_url ? (
+                    {item.public_url && isVideoType(item.type) ? (
+                      <video
+                        src={item.public_url}
+                        className="h-full w-full object-cover"
+                        muted
+                        playsInline
+                        preload="metadata"
+                      />
+                    ) : item.public_url ? (
                       <Image
                         src={item.public_url}
                         alt={item.caption || "Content"}

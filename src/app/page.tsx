@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
+import { TrendingContestants } from "@/components/marketing/trending-contestants";
 
 const contestantImages = [
   { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", alt: "Bikini beauty at the beach" },
@@ -166,6 +167,9 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ===== TRENDING CONTESTANTS ===== */}
+      <TrendingContestants />
 
       {/* ===== SECTION 2: COMPETITION STATUS BAR ===== */}
       <section className="bg-zinc-900 border-t-2 border-amber-500">

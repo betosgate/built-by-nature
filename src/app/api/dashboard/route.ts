@@ -79,6 +79,8 @@ export async function GET() {
         totalEarnings: profile?.total_earnings || 0,
         avatarUrl: profile?.avatar_url,
         referralCode: profile?.referral_code,
+        slug: profile?.slug || null,
+        bio: profile?.bio || "",
       },
       stats: {
         totalVotes,

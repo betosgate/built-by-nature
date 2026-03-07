@@ -14,6 +14,8 @@ import {
   Loader2,
   CheckCircle,
   AlertCircle,
+  Link2,
+  ExternalLink,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -25,6 +27,8 @@ interface ProfileData {
   bio: string;
   tokensBalance: number;
   avatarUrl: string | null;
+  slug: string | null;
+  role: string;
 }
 
 export default function AccountPage() {
@@ -40,6 +44,13 @@ export default function AccountPage() {
   const [tokensBalance, setTokensBalance] = useState(0);
   const [editName, setEditName] = useState("");
   const [editBio, setEditBio] = useState("");
+
+  // Vanity URL state
+  const [slug, setSlug] = useState("");
+  const [editSlug, setEditSlug] = useState("");
+  const [slugSaving, setSlugSaving] = useState(false);
+  const [slugStatus, setSlugStatus] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [userRole, setUserRole] = useState("");
 
   // Account settings state
   const [newEmail, setNewEmail] = useState("");
@@ -69,6 +80,10 @@ export default function AccountPage() {
           setEditName(name);
           setEditBio(profileBio);
           setTokensBalance(data.stats?.tokensBalance ?? 0);
+          const profileSlug = data.profile?.slug || "";
+          setSlug(profileSlug);
+          setEditSlug(profileSlug);
+          setUserRole(data.profile?.role || "");
         }
       } catch {
         // fail silently
@@ -116,6 +131,31 @@ export default function AccountPage() {
     setEditName(displayName);
     setEditBio(bio);
     setIsEditingProfile(false);
+  };
+
+  const handleSaveSlug = async () => {
+    setSlugSaving(true);
+    setSlugStatus(null);
+    try {
+      const res = await fetch("/api/profile/slug", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ slug: editSlug }),
+      });
+      const result = await res.json();
+      if (res.ok) {
+        setSlug(result.slug);
+        setEditSlug(result.slug);
+        setSlugStatus({ type: "success", text: `Your profile is live at builtbynature.com/${result.slug}` });
+      } else {
+        setSlugStatus({ type: "error", text: result.error || "Failed to set URL" });
+      }
+    } catch {
+      setSlugStatus({ type: "error", text: "Failed to save. Please try again." });
+    } finally {
+      setSlugSaving(false);
+      setTimeout(() => setSlugStatus(null), 5000);
+    }
   };
 
   const handleUpdateEmail = async (e: React.FormEvent) => {
@@ -293,6 +333,72 @@ export default function AccountPage() {
           </div>
         </div>
       </section>
+
+      {/* Vanity URL — contestants only */}
+      {(userRole === "contestant" || slug) && (
+        <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6">
+          <h2 className="text-lg font-semibold text-white mb-1 flex items-center gap-2">
+            <Link2 className="h-5 w-5 text-amber-500" />
+            Your Profile Link
+          </h2>
+          <p className="text-sm text-gray-400 mb-4">
+            Choose a custom URL for your public profile page.
+          </p>
+
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-zinc-500 shrink-0">builtbynature.com/</span>
+            <input
+              type="text"
+              value={editSlug}
+              onChange={(e) => setEditSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, ""))}
+              placeholder="your-name"
+              maxLength={30}
+              className={`${inputClass} flex-1`}
+            />
+            <Button
+              onClick={handleSaveSlug}
+              disabled={slugSaving || editSlug === slug}
+              className="bg-amber-500 text-black hover:bg-amber-400 font-semibold shrink-0"
+            >
+              {slugSaving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+              {slug ? "Update" : "Claim"}
+            </Button>
+          </div>
+
+          {slug && (
+            <div className="mt-3 flex items-center gap-2">
+              <a
+                href={`/${slug}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-amber-400 hover:underline flex items-center gap-1"
+              >
+                <ExternalLink className="size-3" />
+                builtbynature.com/{slug}
+              </a>
+            </div>
+          )}
+
+          {slugStatus && (
+            <p
+              className={`mt-2 text-sm flex items-center gap-1.5 ${
+                slugStatus.type === "success" ? "text-green-400" : "text-red-400"
+              }`}
+            >
+              {slugStatus.type === "success" ? (
+                <CheckCircle className="size-3.5" />
+              ) : (
+                <AlertCircle className="size-3.5" />
+              )}
+              {slugStatus.text}
+            </p>
+          )}
+
+          <p className="mt-3 text-xs text-zinc-600">
+            3-30 characters. Lowercase letters, numbers, and hyphens only.
+          </p>
+        </section>
+      )}
 
       {/* Token Balance */}
       <section className="bg-white/[0.03] border border-white/10 rounded-xl p-6">

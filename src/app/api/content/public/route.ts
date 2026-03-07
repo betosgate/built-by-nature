@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createClient as createServiceClient } from "@supabase/supabase-js";
 
-// GET /api/content/public?page=1&limit=20&search=keyword&contest_id=uuid&sort=newest|popular
+// GET /api/content/public?page=1&limit=20&search=keyword&contest_id=uuid&sort=newest|trending
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest) {
       .from("content")
       .select(`
         id,
-        file_type,
+        type,
         storage_path,
         public_url,
         caption,
@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
         created_at,
         user_id,
         contest_entry_id,
-        profiles!inner (
+        profiles (
           id,
           display_name,
           avatar_url
@@ -43,15 +43,23 @@ export async function GET(request: NextRequest) {
     }
 
     if (contestId) {
-      // Filter by contest - need to join through contest_entries
-      query = query.not("contest_entry_id", "is", null);
+      // Get entry IDs for this contest first
+      const { data: entries } = await adminClient
+        .from("contest_entries")
+        .select("id")
+        .eq("contest_id", contestId);
+
+      if (entries && entries.length > 0) {
+        query = query.in("contest_entry_id", entries.map(e => e.id));
+      } else {
+        return NextResponse.json({
+          content: [],
+          pagination: { page, limit, total: 0, totalPages: 0 },
+        });
+      }
     }
 
-    if (sort === "newest") {
-      query = query.order("created_at", { ascending: false });
-    } else {
-      query = query.order("created_at", { ascending: false }); // fallback
-    }
+    query = query.order("created_at", { ascending: false });
 
     const { data: content, error } = await query;
 
@@ -59,7 +67,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Get total count for pagination
+    // Get total count
     const { count } = await adminClient
       .from("content")
       .select("id", { count: "exact", head: true })
@@ -76,9 +84,6 @@ export async function GET(request: NextRequest) {
     });
   } catch (error) {
     console.error("Public content error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }
