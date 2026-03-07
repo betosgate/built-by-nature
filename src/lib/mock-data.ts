@@ -16,7 +16,7 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p2",
-        url: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1727773563114-aedb6c33b7c7?w=600&h=800&fit=crop",
         caption: "Sunset bikini session",
         is_private: false,
       },
@@ -51,7 +51,7 @@ export const MOCK_CONTESTANTS = [
       },
       {
         id: "p6",
-        url: "https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?w=600&h=800&fit=crop",
+        url: "https://images.unsplash.com/photo-1719300570685-ac826a21f97c?w=600&h=800&fit=crop",
         caption: "Natural glow",
         is_private: false,
       },

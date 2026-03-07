@@ -55,7 +55,7 @@ export default function ContestantProfilePage({
   // In a real app we'd await params and fetch from DB
   const contestant = MOCK_CONTESTANTS[0]; // Default to first contestant for demo
   const privatePhotos = [
-    "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=500&fit=crop",
+    "https://images.unsplash.com/photo-1727773563114-aedb6c33b7c7?w=400&h=500&fit=crop",
     "https://images.unsplash.com/photo-1600980979121-9dea33866719?w=400&h=500&fit=crop",
     "https://images.unsplash.com/photo-1608460457909-d2c153f97f90?w=400&h=500&fit=crop",
   ];
