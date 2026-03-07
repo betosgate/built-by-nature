@@ -58,6 +58,7 @@ export default function RecruiterSignupPage() {
         email,
         password,
         options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             display_name: displayName,
             role: "recruiter",

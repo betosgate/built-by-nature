@@ -59,6 +59,7 @@ export default function ContestantSignupPage() {
         email,
         password,
         options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             display_name: displayName,
             role: "contestant",

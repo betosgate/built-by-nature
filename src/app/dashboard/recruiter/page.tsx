@@ -249,11 +249,11 @@ export default function RecruiterDashboard() {
           </div>
         </div>
 
-        {/* Earnings Over Time (Placeholder) */}
+        {/* Earnings Over Time */}
         <div className="rounded-xl border border-white/10 bg-zinc-900 p-6">
           <h3 className="mb-4 text-lg font-semibold">Earnings Over Time</h3>
           <div className="flex h-64 items-center justify-center rounded-lg border border-dashed border-white/10 bg-zinc-950">
-            <p className="text-sm text-zinc-500">Chart placeholder - Earnings over time visualization</p>
+            <p className="text-sm text-zinc-500">Earnings chart will appear once you start earning from recruited contestants.</p>
           </div>
         </div>
       </div>

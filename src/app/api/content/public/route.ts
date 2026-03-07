@@ -67,11 +67,26 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Get total count
-    const { count } = await adminClient
+    // Get total count (respecting filters)
+    let countQuery = adminClient
       .from("content")
       .select("id", { count: "exact", head: true })
       .eq("is_private", false);
+
+    if (search) {
+      countQuery = countQuery.ilike("caption", `%${search}%`);
+    }
+    if (contestId) {
+      const { data: countEntries } = await adminClient
+        .from("contest_entries")
+        .select("id")
+        .eq("contest_id", contestId);
+      if (countEntries && countEntries.length > 0) {
+        countQuery = countQuery.in("contest_entry_id", countEntries.map(e => e.id));
+      }
+    }
+
+    const { count } = await countQuery;
 
     return NextResponse.json({
       content: content || [],

@@ -59,6 +59,7 @@ export default function FanSignupPage() {
         email,
         password,
         options: {
+          emailRedirectTo: `${window.location.origin}/auth/callback`,
           data: {
             display_name: displayName,
             role: "fan",
