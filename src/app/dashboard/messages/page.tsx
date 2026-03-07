@@ -10,7 +10,7 @@ const conversations = [
     id: "1",
     name: "Marcus Chen",
     avatar:
-      "https://images.unsplash.com/photo-NVdQS1Tp6L0?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1754496763355-4a1081c1f58c?w=80&h=80&fit=crop",
     lastMessage: "Good luck in the Summer Glow contest!",
     time: "2m ago",
     unread: true,
@@ -19,7 +19,7 @@ const conversations = [
     id: "2",
     name: "Contest Support",
     avatar:
-      "https://images.unsplash.com/photo-7cJaMs46tYs?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=80&h=80&fit=crop",
     lastMessage: "Your entry has been approved for Round 2.",
     time: "1h ago",
     unread: true,
@@ -28,7 +28,7 @@ const conversations = [
     id: "3",
     name: "Jade Williams",
     avatar:
-      "https://images.unsplash.com/photo-OidZPIVI9l8?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1725282641844-282ac49abd58?w=80&h=80&fit=crop",
     lastMessage: "Thanks for the collab idea! Let me think about it.",
     time: "3h ago",
     unread: false,
@@ -37,7 +37,7 @@ const conversations = [
     id: "4",
     name: "Tyler Brooks",
     avatar:
-      "https://images.unsplash.com/photo-QmktCddNtPA?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1697739348487-75f668fdb6fb?w=80&h=80&fit=crop",
     lastMessage: "That photo shoot was amazing! Can you send me the edits?",
     time: "1d ago",
     unread: false,
@@ -46,7 +46,7 @@ const conversations = [
     id: "5",
     name: "Luna Martinez",
     avatar:
-      "https://images.unsplash.com/photo-koSCByhajsU?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1561780186-a11781cdb056?w=80&h=80&fit=crop",
     lastMessage: "See you at the next event!",
     time: "2d ago",
     unread: false,
@@ -55,7 +55,7 @@ const conversations = [
     id: "6",
     name: "Sophia Kim",
     avatar:
-      "https://images.unsplash.com/photo-oZDkoZyygG8?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1727896908913-dfb3d1bd2e8d?w=80&h=80&fit=crop",
     lastMessage: "Congrats on making Top 5!",
     time: "3d ago",
     unread: false,

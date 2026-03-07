@@ -40,10 +40,10 @@ const marqueeContestants = [
   { src: "https://images.unsplash.com/photo-1510017098667-27dfc7150acb?w=600&h=800&fit=crop", name: "Mia L.", votes: "9.7k" },
   { src: "https://images.unsplash.com/photo-1525881889266-d50eb6eda4ca?w=600&h=800&fit=crop", name: "Luna W.", votes: "9.1k" },
   { src: "https://images.unsplash.com/photo-1520013817300-1f4c1cb245ef?w=600&h=800&fit=crop", name: "Aria J.", votes: "8.6k" },
-  { src: "https://images.unsplash.com/photo-OidZPIVI9l8?w=600&h=800&fit=crop", name: "Elena T.", votes: "8.2k" },
-  { src: "https://images.unsplash.com/photo-7cJaMs46tYs?w=600&h=800&fit=crop", name: "Chloe B.", votes: "7.9k" },
+  { src: "https://images.unsplash.com/photo-1725282641844-282ac49abd58?w=600&h=800&fit=crop", name: "Elena T.", votes: "8.2k" },
+  { src: "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=600&h=800&fit=crop", name: "Chloe B.", votes: "7.9k" },
   { src: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=800&fit=crop", name: "Zara F.", votes: "7.5k" },
-  { src: "https://images.unsplash.com/photo-oZDkoZyygG8?w=600&h=800&fit=crop", name: "Nova D.", votes: "7.1k" },
+  { src: "https://images.unsplash.com/photo-1727896908913-dfb3d1bd2e8d?w=600&h=800&fit=crop", name: "Nova D.", votes: "7.1k" },
 ];
 
 const topContestants = [
@@ -51,7 +51,7 @@ const topContestants = [
     rank: 1,
     name: "Sophia Martinez",
     location: "Miami, FL",
-    src: "https://images.unsplash.com/photo-7cJaMs46tYs?w=600&h=800&fit=crop",
+    src: "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=600&h=800&fit=crop",
     votes: "12,847",
     badge: "Crown Favorite",
   },
@@ -59,7 +59,7 @@ const topContestants = [
     rank: 2,
     name: "Ava Reynolds",
     location: "Los Angeles, CA",
-    src: "https://images.unsplash.com/photo-W_r8LabXKYs?w=600&h=800&fit=crop",
+    src: "https://images.unsplash.com/photo-1617097288997-861d70c2cd2d?w=600&h=800&fit=crop",
     votes: "11,203",
     badge: "Fan Favorite",
   },
@@ -228,7 +228,7 @@ export default function HomePage() {
                 <div className="flex flex-col gap-4">
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10">
                     <Image
-                      src="https://images.unsplash.com/photo-7cJaMs46tYs?w=600&h=800&fit=crop"
+                      src="https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=600&h=800&fit=crop"
                       alt="Contestant portrait"
                       fill
                       className="object-cover"
@@ -242,7 +242,7 @@ export default function HomePage() {
                   </div>
                   <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10">
                     <Image
-                      src="https://images.unsplash.com/photo-koSCByhajsU?w=600&h=800&fit=crop"
+                      src="https://images.unsplash.com/photo-1561780186-a11781cdb056?w=600&h=800&fit=crop"
                       alt="Contestant portrait"
                       fill
                       className="object-cover"
@@ -716,7 +716,7 @@ export default function HomePage() {
             {/* Background decorative image */}
             <div className="absolute right-0 top-0 bottom-0 w-1/3 hidden md:block">
               <Image
-                src="https://images.unsplash.com/photo-xjm6oyNnsUI?w=600&h=800&fit=crop"
+                src="https://images.unsplash.com/photo-1541433621554-05421e3a3e5a?w=600&h=800&fit=crop"
                 alt="Decorative"
                 fill
                 className="object-cover opacity-20"
@@ -801,7 +801,7 @@ export default function HomePage() {
             <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-colors group">
               <div className="relative h-48 overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-QmktCddNtPA?w=600&h=800&fit=crop"
+                  src="https://images.unsplash.com/photo-1697739348487-75f668fdb6fb?w=600&h=800&fit=crop"
                   alt="Recruiter earning"
                   fill
                   className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
@@ -824,7 +824,7 @@ export default function HomePage() {
             <div className="bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-amber-500/30 transition-colors group">
               <div className="relative h-48 overflow-hidden">
                 <Image
-                  src="https://images.unsplash.com/photo-oZDkoZyygG8?w=600&h=800&fit=crop"
+                  src="https://images.unsplash.com/photo-1727896908913-dfb3d1bd2e8d?w=600&h=800&fit=crop"
                   alt="Fan voting"
                   fill
                   className="object-cover object-top group-hover:scale-105 transition-transform duration-500"

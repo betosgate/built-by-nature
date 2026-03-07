@@ -139,15 +139,15 @@ export default function AboutPage() {
                 label: "Natural Beauty",
               },
               {
-                src: "https://images.unsplash.com/photo-7cJaMs46tYs?w=400&h=500&fit=crop",
+                src: "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=400&h=500&fit=crop",
                 label: "Authentic",
               },
               {
-                src: "https://images.unsplash.com/photo-koSCByhajsU?w=400&h=500&fit=crop",
+                src: "https://images.unsplash.com/photo-1561780186-a11781cdb056?w=400&h=500&fit=crop",
                 label: "Real",
               },
               {
-                src: "https://images.unsplash.com/photo-NVdQS1Tp6L0?w=400&h=500&fit=crop",
+                src: "https://images.unsplash.com/photo-1754496763355-4a1081c1f58c?w=400&h=500&fit=crop",
                 label: "Confident",
               },
             ].map((photo) => (

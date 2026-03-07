@@ -89,7 +89,7 @@ const voterInsights = [
   {
     name: "VoteKing99",
     avatar:
-      "https://images.unsplash.com/photo-7cJaMs46tYs?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=80&h=80&fit=crop",
     totalVotes: 842,
     totalSpent: "$168.40",
     lastVote: "2 min ago",
@@ -97,7 +97,7 @@ const voterInsights = [
   {
     name: "BeachVibes",
     avatar:
-      "https://images.unsplash.com/photo-OidZPIVI9l8?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1725282641844-282ac49abd58?w=80&h=80&fit=crop",
     totalVotes: 625,
     totalSpent: "$125.00",
     lastVote: "15 min ago",
@@ -105,7 +105,7 @@ const voterInsights = [
   {
     name: "FitnessFan23",
     avatar:
-      "https://images.unsplash.com/photo-QmktCddNtPA?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1697739348487-75f668fdb6fb?w=80&h=80&fit=crop",
     totalVotes: 510,
     totalSpent: "$102.00",
     lastVote: "1 hr ago",
@@ -113,7 +113,7 @@ const voterInsights = [
   {
     name: "StarGazer",
     avatar:
-      "https://images.unsplash.com/photo-oZDkoZyygG8?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1727896908913-dfb3d1bd2e8d?w=80&h=80&fit=crop",
     totalVotes: 384,
     totalSpent: "$76.80",
     lastVote: "3 hrs ago",
@@ -121,7 +121,7 @@ const voterInsights = [
   {
     name: "NightOwl_X",
     avatar:
-      "https://images.unsplash.com/photo-W_r8LabXKYs?w=80&h=80&fit=crop",
+      "https://images.unsplash.com/photo-1617097288997-861d70c2cd2d?w=80&h=80&fit=crop",
     totalVotes: 290,
     totalSpent: "$58.00",
     lastVote: "1d ago",

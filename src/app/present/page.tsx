@@ -150,7 +150,7 @@ function buildSlides(): Slide[] {
           {/* Hero mock */}
           <div className="relative rounded-2xl overflow-hidden border border-zinc-800">
             <Image
-              src="https://images.unsplash.com/photo-OidZPIVI9l8?w=1920&h=1080&fit=crop"
+              src="https://images.unsplash.com/photo-1725282641844-282ac49abd58?w=1920&h=1080&fit=crop"
               alt="Hero"
               fill
               className="object-cover opacity-40"

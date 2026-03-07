@@ -24,7 +24,7 @@ const comments = [
   {
     id: "c1",
     user: "VoteKing99",
-    avatar: "https://images.unsplash.com/photo-7cJaMs46tYs?w=80&h=80&fit=crop",
+    avatar: "https://images.unsplash.com/photo-1742567009397-c64925e0c3ba?w=80&h=80&fit=crop",
     text: "Absolutely stunning! Voted 20 tokens today. Keep slaying queen!",
     time: "2h ago",
     likes: 12,
@@ -32,7 +32,7 @@ const comments = [
   {
     id: "c2",
     user: "BeachVibes",
-    avatar: "https://images.unsplash.com/photo-OidZPIVI9l8?w=80&h=80&fit=crop",
+    avatar: "https://images.unsplash.com/photo-1725282641844-282ac49abd58?w=80&h=80&fit=crop",
     text: "That golden hour shot is insane. Deserves first place for sure.",
     time: "5h ago",
     likes: 8,
@@ -40,7 +40,7 @@ const comments = [
   {
     id: "c3",
     user: "FitnessFan23",
-    avatar: "https://images.unsplash.com/photo-QmktCddNtPA?w=80&h=80&fit=crop",
+    avatar: "https://images.unsplash.com/photo-1697739348487-75f668fdb6fb?w=80&h=80&fit=crop",
     text: "So refreshing to see real, natural beauty. You've got my votes!",
     time: "1d ago",
     likes: 24,
