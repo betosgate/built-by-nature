@@ -1,80 +1,90 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
+import crypto from "crypto";
 
-const TOKEN_BUNDLES: Record<number, number> = {
-  1: 500,   // 1 token  = $5.00
-  5: 2000,  // 5 tokens = $20.00
-  10: 3500, // 10 tokens = $35.00
-  25: 7500, // 25 tokens = $75.00
+const TOKEN_BUNDLES: Record<number, { amount: number; price: number }> = {
+  0: { amount: 1, price: 5 },
+  1: { amount: 5, price: 20 },
+  2: { amount: 10, price: 35 },
+  3: { amount: 25, price: 75 },
 };
+
+function generateCCBillPaymentUrl(params: {
+  price: number;
+  userId: string;
+  tokenAmount: number;
+  bundleIndex: number;
+}): string {
+  const accountNo = process.env.CCBILL_ACCOUNT_NUMBER!;
+  const subAccountNo = process.env.CCBILL_SUB_ACCOUNT_NUMBER!;
+  const flexFormId = process.env.CCBILL_FLEXFORM_ID!;
+  const salt = process.env.CCBILL_SALT!;
+
+  const currencyCode = "840"; // USD
+  const initialPeriod = "2"; // one-time (2 days, but single billing)
+  const formPrice = params.price.toFixed(2);
+
+  // CCBill requires an MD5 digest for form security
+  // Format: initialPrice + initialPeriod + currencyCode + salt
+  const digestString = `${formPrice}${initialPeriod}${currencyCode}${salt}`;
+  const formDigest = crypto.createHash("md5").update(digestString).digest("hex");
+
+  const baseUrl = `https://api.ccbill.com/wap-frontflex/flexforms/${flexFormId}`;
+
+  const queryParams = new URLSearchParams({
+    accountNo,
+    subAccountNo,
+    initialPrice: formPrice,
+    initialPeriod,
+    currencyCode,
+    formDigest,
+    // Custom fields passed through to the postback
+    "X-userId": params.userId,
+    "X-tokenAmount": String(params.tokenAmount),
+    "X-bundleIndex": String(params.bundleIndex),
+  });
+
+  return `${baseUrl}?${queryParams.toString()}`;
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { bundleSize } = body;
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    // TODO: Validate user is authenticated
-    // const session = await getServerSession(authOptions);
-    // if (!session?.user) {
-    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    // }
-    // const userId = session.user.id;
-    const userId = "placeholder-user-id";
-
-    const priceInCents = TOKEN_BUNDLES[bundleSize as number];
-
-    if (!priceInCents) {
-      return NextResponse.json(
-        {
-          error: "Invalid bundle size. Choose from: 1, 5, 10, or 25 tokens",
-          availableBundles: {
-            1: "$5.00",
-            5: "$20.00",
-            10: "$35.00",
-            25: "$75.00",
-          },
-        },
-        { status: 400 }
-      );
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // TODO: Create Stripe checkout session
-    // const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-    // const checkoutSession = await stripe.checkout.sessions.create({
-    //   payment_method_types: ["card"],
-    //   line_items: [
-    //     {
-    //       price_data: {
-    //         currency: "usd",
-    //         product_data: {
-    //           name: `${bundleSize} Token${bundleSize > 1 ? "s" : ""}`,
-    //           description: `Purchase ${bundleSize} voting token${bundleSize > 1 ? "s" : ""} for Built by Nature`,
-    //         },
-    //         unit_amount: priceInCents,
-    //       },
-    //       quantity: 1,
-    //     },
-    //   ],
-    //   mode: "payment",
-    //   metadata: {
-    //     userId,
-    //     tokenAmount: String(bundleSize),
-    //   },
-    //   success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?purchase=success`,
-    //   cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard?purchase=cancelled`,
-    // });
+    const body = await request.json();
+    const { bundleIndex } = body;
 
-    // Placeholder response
-    return NextResponse.json({
-      // url: checkoutSession.url,
-      url: "https://checkout.stripe.com/placeholder",
-      bundleSize,
-      price: `$${(priceInCents / 100).toFixed(2)}`,
+    const bundle = TOKEN_BUNDLES[bundleIndex as number];
+    if (!bundle) {
+      return NextResponse.json({ error: "Invalid bundle selection" }, { status: 400 });
+    }
+
+    if (
+      !process.env.CCBILL_ACCOUNT_NUMBER ||
+      !process.env.CCBILL_FLEXFORM_ID ||
+      process.env.CCBILL_ACCOUNT_NUMBER === "placeholder"
+    ) {
+      return NextResponse.json({
+        error: "CCBill is not configured yet. Token purchases will be available soon.",
+        comingSoon: true,
+      }, { status: 503 });
+    }
+
+    const paymentUrl = generateCCBillPaymentUrl({
+      price: bundle.price,
+      userId: user.id,
+      tokenAmount: bundle.amount,
+      bundleIndex,
     });
+
+    return NextResponse.json({ url: paymentUrl });
   } catch (error) {
     console.error("Checkout error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Failed to create checkout session" }, { status: 500 });
   }
 }

@@ -1,105 +1,58 @@
 import { NextRequest, NextResponse } from "next/server";
-
-const DAILY_VOTE_LIMIT_PER_CONTESTANT = 20;
-const CONTESTANT_EARNING_PERCENT = 0.2;
-const RECRUITER_EARNING_PERCENT = 0.1;
-const TOKEN_VALUE_USD = 5; // Each token is worth $5
+import { createClient } from "@/lib/supabase/server";
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { contestantId } = body;
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    // TODO: Validate user is authenticated
-    // const session = await getServerSession(authOptions);
-    // if (!session?.user) {
-    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    // }
-    // const userId = session.user.id;
-    const userId = "placeholder-user-id";
-
-    if (!contestantId) {
-      return NextResponse.json(
-        { error: "contestantId is required" },
-        { status: 400 }
-      );
+    if (!user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // TODO: Check daily vote limit (20 votes per contestant per day)
-    // const today = new Date().toISOString().split("T")[0];
-    // const votesToday = await db.vote.count({
-    //   where: {
-    //     userId,
-    //     contestantId,
-    //     createdAt: { gte: new Date(today) },
-    //   },
-    // });
-    // if (votesToday >= DAILY_VOTE_LIMIT_PER_CONTESTANT) {
-    //   return NextResponse.json(
-    //     { error: "Daily vote limit reached for this contestant" },
-    //     { status: 429 }
-    //   );
-    // }
+    const body = await request.json();
+    const { entryId, contestId, roundNumber = 1, tokensSpent = 1 } = body;
 
-    // TODO: Check user has at least 1 token
-    // const user = await db.user.findUnique({ where: { id: userId } });
-    // if (!user || user.tokens < 1) {
-    //   return NextResponse.json(
-    //     { error: "Insufficient token balance" },
-    //     { status: 400 }
-    //   );
-    // }
+    if (!entryId || !contestId) {
+      return NextResponse.json({ error: "entryId and contestId are required" }, { status: 400 });
+    }
 
-    // TODO: Deduct 1 token from user balance
-    // await db.user.update({
-    //   where: { id: userId },
-    //   data: { tokens: { decrement: 1 } },
-    // });
+    // Call the process_vote database function which handles everything atomically:
+    // - Validates contest/entry state
+    // - Checks daily vote limit (20/day/contestant)
+    // - Deducts token from voter
+    // - Creates vote record
+    // - Creates earnings (20% contestant, 10% recruiter)
+    // - Updates vote_count on entry
+    const { data, error } = await supabase.rpc("process_vote", {
+      p_voter_id: user.id,
+      p_entry_id: entryId,
+      p_contest_id: contestId,
+      p_round_number: roundNumber,
+      p_tokens_spent: tokensSpent,
+    });
 
-    // TODO: Create vote record
-    // const vote = await db.vote.create({
-    //   data: { userId, contestantId },
-    // });
+    if (error) {
+      // The process_vote function raises exceptions for business rule violations
+      const message = error.message || "Failed to process vote";
 
-    // TODO: Create earnings records
-    // Contestant earns 20% of the token value
-    // await db.earning.create({
-    //   data: {
-    //     userId: contestantId,
-    //     amount: TOKEN_VALUE_USD * CONTESTANT_EARNING_PERCENT,
-    //     type: "CONTESTANT_VOTE",
-    //     voteId: vote.id,
-    //   },
-    // });
+      if (message.includes("Insufficient token balance")) {
+        return NextResponse.json({ error: message, needsTokens: true }, { status: 400 });
+      }
+      if (message.includes("Daily vote limit")) {
+        return NextResponse.json({ error: message }, { status: 429 });
+      }
 
-    // Recruiter earns 10% of the token value (if contestant has a recruiter)
-    // const contestant = await db.user.findUnique({ where: { id: contestantId } });
-    // if (contestant?.recruiterId) {
-    //   await db.earning.create({
-    //     data: {
-    //       userId: contestant.recruiterId,
-    //       amount: TOKEN_VALUE_USD * RECRUITER_EARNING_PERCENT,
-    //       type: "RECRUITER_COMMISSION",
-    //       voteId: vote.id,
-    //     },
-    //   });
-    // }
-
-    // TODO: Get updated vote count
-    // const updatedVoteCount = await db.vote.count({
-    //   where: { contestantId },
-    // });
+      return NextResponse.json({ error: message }, { status: 400 });
+    }
 
     return NextResponse.json({
       success: true,
-      voteCount: 0, // placeholder
+      voteId: data,
       message: "Vote recorded successfully",
     });
   } catch (error) {
     console.error("Vote error:", error);
-    return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
 }

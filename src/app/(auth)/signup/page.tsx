@@ -2,9 +2,10 @@
 
 import { useState, Suspense } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { UserPlus, Trophy, Vote, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { createClient } from "@/lib/supabase/client";
 
 const inputClass =
   "w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-amber-500";
@@ -48,6 +49,8 @@ function SignupForm() {
   const [agreedToTerms, setAgreedToTerms] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,28 +88,48 @@ function SignupForm() {
     setLoading(true);
 
     try {
-      // TODO: Integrate supabase auth sign-up
-      // const { data, error } = await supabase.auth.signUp({
-      //   email,
-      //   password,
-      //   options: {
-      //     data: {
-      //       display_name: displayName,
-      //       role: selectedRole,
-      //       date_of_birth: dateOfBirth,
-      //       referral_code: referralCode || undefined,
-      //     },
-      //   },
-      // });
-      // if (error) throw error;
-      // router.push('/verify-email');
-      console.log("Signup submitted:", { email, displayName, selectedRole, referralCode });
+      const supabase = createClient();
+      const roleMap: Record<string, string> = { contestant: "contestant", voter: "fan", recruiter: "recruiter" };
+      const { error: authError } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            display_name: displayName,
+            role: roleMap[selectedRole] || "fan",
+            date_of_birth: dateOfBirth,
+            referral_code: referralCode || undefined,
+          },
+        },
+      });
+      if (authError) throw authError;
+      setSuccess(true);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "An error occurred");
     } finally {
       setLoading(false);
     }
   };
+
+  if (success) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+          <UserPlus className="h-8 w-8 text-green-400" />
+        </div>
+        <h2 className="text-xl font-bold text-white mb-2">Check Your Email</h2>
+        <p className="text-gray-400 mb-6">
+          We sent a confirmation link to <strong className="text-white">{email}</strong>.
+          Click the link to verify your account and get started.
+        </p>
+        <Link href="/login">
+          <Button className="bg-amber-500 text-black hover:bg-amber-400 font-semibold">
+            Go to Login
+          </Button>
+        </Link>
+      </div>
+    );
+  }
 
   return (
     <div>

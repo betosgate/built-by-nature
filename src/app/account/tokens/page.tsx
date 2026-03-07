@@ -14,7 +14,7 @@ export default function BuyTokensPage() {
   async function handlePurchase() {
     setLoading(true);
     try {
-      // TODO: Create Stripe checkout session
+      // Create CCBill checkout session
       const response = await fetch("/api/tokens/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -110,7 +110,7 @@ export default function BuyTokensPage() {
 
         <div className="flex items-center gap-2 text-sm text-gray-500">
           <ShieldCheck className="h-4 w-4" />
-          <span>Secure payment powered by Stripe</span>
+          <span>Secure payment powered by CCBill</span>
         </div>
       </div>
     </div>
