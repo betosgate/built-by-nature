@@ -1,14 +1,13 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, notFound } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import {
   Heart,
   Trophy,
   Lock,
-  DollarSign,
   Crown,
   Plane,
   Loader2,
@@ -17,36 +16,19 @@ import {
   Minus,
   Plus,
   Play,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Navbar } from "@/components/marketing/navbar";
 import { Footer } from "@/components/marketing/footer";
 import { SocialShare } from "@/components/social-share";
-
-interface Profile {
-  id: string;
-  display_name: string | null;
-  avatar_url: string | null;
-  bio: string | null;
-  role: string;
-  slug: string;
-  total_earnings: number;
-  created_at: string;
-}
 
 interface ContestEntry {
   id: string;
   status: string;
   vote_count: number;
   current_round: number;
-  contests: {
-    id: string;
-    name: string;
-    status: string;
-    current_round: number;
-    total_rounds: number;
-  } | null;
+  contests: { id: string; name: string; status: string; current_round: number; total_rounds: number } | null;
 }
 
 interface ContentItem {
@@ -55,12 +37,10 @@ interface ContentItem {
   public_url: string | null;
   caption: string | null;
   is_private: boolean;
-  created_at: string;
-  contest_entry_id: string | null;
 }
 
 interface ProfileData {
-  profile: Profile;
+  profile: { id: string; display_name: string | null; avatar_url: string | null; bio: string | null; slug: string };
   publicContent: ContentItem[];
   privateContentCount: number;
   entries: ContestEntry[];
@@ -75,37 +55,27 @@ export default function VanityProfilePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Voting state
   const [tokenCount, setTokenCount] = useState(1);
   const [voting, setVoting] = useState(false);
-  const [voteMessage, setVoteMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
+  const [voteMsg, setVoteMsg] = useState<{ text: string; type: "ok" | "err" } | null>(null);
+  const [lightboxItem, setLightboxItem] = useState<ContentItem | null>(null);
 
   useEffect(() => {
-    async function fetchProfile() {
+    async function load() {
       try {
         const res = await fetch(`/api/profile/${slug}`);
-        if (res.status === 404) {
-          setError("not_found");
-          return;
-        }
-        if (!res.ok) {
-          setError("Failed to load profile");
-          return;
-        }
+        if (res.status === 404) { setError("not_found"); return; }
+        if (!res.ok) { setError("Failed to load profile"); return; }
         setData(await res.json());
-      } catch {
-        setError("Failed to load profile");
-      } finally {
-        setLoading(false);
-      }
+      } catch { setError("Failed to load profile"); }
+      finally { setLoading(false); }
     }
-    if (slug) fetchProfile();
+    if (slug) load();
   }, [slug]);
 
   async function handleVote(entry: ContestEntry) {
     setVoting(true);
-    setVoteMessage(null);
-
+    setVoteMsg(null);
     try {
       const res = await fetch("/api/votes", {
         method: "POST",
@@ -117,40 +87,28 @@ export default function VanityProfilePage() {
           tokensSpent: tokenCount,
         }),
       });
-
       const result = await res.json();
-
       if (!res.ok) {
-        if (res.status === 401) {
-          setVoteMessage({ text: "Please log in to vote.", type: "error" });
-          return;
-        }
-        if (result.needsTokens) {
-          setVoteMessage({ text: "You need tokens to vote. Purchase tokens first.", type: "error" });
-          return;
-        }
-        setVoteMessage({ text: result.error || "Failed to vote.", type: "error" });
+        if (res.status === 401) { setVoteMsg({ text: "Please log in to vote.", type: "err" }); return; }
+        if (result.needsTokens) { setVoteMsg({ text: "You need tokens to vote first.", type: "err" }); return; }
+        setVoteMsg({ text: result.error || "Vote failed.", type: "err" });
         return;
       }
-
-      const votesAdded = tokenCount * 5;
-      setVoteMessage({ text: `${votesAdded} votes cast! Thank you for your support.`, type: "success" });
+      const added = tokenCount * 5;
+      setVoteMsg({ text: `${added} votes cast!`, type: "ok" });
       setData((prev) => {
         if (!prev) return prev;
         return {
           ...prev,
-          totalVotes: prev.totalVotes + votesAdded,
+          totalVotes: prev.totalVotes + added,
           entries: prev.entries.map((e) =>
-            e.id === entry.id ? { ...e, vote_count: e.vote_count + votesAdded } : e
+            e.id === entry.id ? { ...e, vote_count: e.vote_count + added } : e
           ),
         };
       });
       setTokenCount(1);
-    } catch {
-      setVoteMessage({ text: "An error occurred while voting.", type: "error" });
-    } finally {
-      setVoting(false);
-    }
+    } catch { setVoteMsg({ text: "Something went wrong.", type: "err" }); }
+    finally { setVoting(false); }
   }
 
   if (loading) {
@@ -173,15 +131,9 @@ export default function VanityProfilePage() {
           <div className="text-center">
             <Users className="mx-auto mb-4 size-12 text-zinc-600" />
             <h1 className="mb-2 text-2xl font-bold">Profile Not Found</h1>
-            <p className="mb-6 text-zinc-400">
-              {error === "not_found"
-                ? "This profile doesn't exist or hasn't been claimed yet."
-                : error || "Something went wrong."}
-            </p>
+            <p className="mb-6 text-zinc-400">This profile doesn&apos;t exist or hasn&apos;t been claimed yet.</p>
             <Link href="/contestants">
-              <Button className="bg-amber-500 text-black hover:bg-amber-400">
-                Browse Contestants
-              </Button>
+              <Button className="bg-amber-500 text-black hover:bg-amber-400">Browse Contestants</Button>
             </Link>
           </div>
         </div>
@@ -191,7 +143,7 @@ export default function VanityProfilePage() {
   }
 
   const { profile, publicContent, privateContentCount, entries, totalVotes } = data;
-  const displayName = profile.display_name || "Anonymous";
+  const name = profile.display_name || "Anonymous";
   const activeEntry = entries.find((e) => e.status === "active");
   const profileUrl = `/${profile.slug}`;
 
@@ -199,389 +151,241 @@ export default function VanityProfilePage() {
     <div className="min-h-screen bg-black text-white">
       <Navbar />
 
-      {/* Hero banner */}
-      <div className="relative h-48 w-full sm:h-64">
-        <div className="absolute inset-0 bg-gradient-to-br from-amber-900/30 via-black to-black" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-amber-500/10 via-transparent to-transparent" />
-      </div>
+      <main className="mx-auto max-w-5xl px-4 pt-6 pb-16 sm:px-6">
 
-      <main className="mx-auto max-w-5xl px-4 pb-20 sm:px-6">
-        {/* Profile header */}
-        <div className="-mt-20 mb-8 flex flex-col items-center gap-6 sm:flex-row sm:items-end">
-          <div className="relative size-36 shrink-0 overflow-hidden rounded-full border-4 border-black ring-2 ring-amber-500/50 sm:size-40">
+        {/* ============ HERO: Big photo + name + vote button ============ */}
+        <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-start">
+          {/* Large profile image */}
+          <div className="relative mx-auto aspect-[3/4] w-full max-w-xs shrink-0 overflow-hidden rounded-2xl border border-zinc-800 sm:mx-0 sm:w-64">
             {profile.avatar_url ? (
-              <Image
-                src={profile.avatar_url}
-                alt={displayName}
-                fill
-                className="object-cover"
-                priority
-              />
+              <Image src={profile.avatar_url} alt={name} fill className="object-cover" priority />
             ) : (
-              <div className="flex size-full items-center justify-center bg-zinc-800 text-5xl font-bold text-amber-500">
-                {displayName.charAt(0).toUpperCase()}
+              <div className="flex size-full items-center justify-center bg-zinc-900 text-6xl font-bold text-amber-500">
+                {name.charAt(0).toUpperCase()}
               </div>
             )}
           </div>
 
-          <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-3xl font-bold sm:text-4xl">{displayName}</h1>
-            <p className="mt-1 text-sm text-zinc-500">builtbynature.com/{profile.slug}</p>
+          {/* Name, contest info, vote CTA */}
+          <div className="flex flex-1 flex-col items-center text-center sm:items-start sm:pt-2 sm:text-left">
+            <h1 className="text-3xl font-bold leading-tight sm:text-4xl">{name}</h1>
             {profile.bio && (
-              <p className="mt-2 max-w-xl text-zinc-400">{profile.bio}</p>
+              <p className="mt-2 max-w-md text-sm text-zinc-400">{profile.bio}</p>
             )}
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-2 sm:justify-start">
-              {activeEntry && (
-                <Badge className="bg-green-500/20 text-green-400 border-green-500/30">
-                  Competing{activeEntry.contests?.name ? ` in ${activeEntry.contests.name}` : ""}
-                </Badge>
-              )}
-              {entries.length > 0 && (
-                <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30">
-                  {totalVotes.toLocaleString()} Total Votes
-                </Badge>
-              )}
-            </div>
-          </div>
 
-          <div className="shrink-0">
-            <SocialShare
-              url={profileUrl}
-              title={`Vote for ${displayName} in Built by Nature!`}
-              contestantName={displayName}
-              contestName={activeEntry?.contests?.name}
-            />
-          </div>
-        </div>
+            {activeEntry && (
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <Link
+                  href={`/contests/${activeEntry.contests?.id}`}
+                  className="rounded-full bg-amber-500/10 px-3 py-1 text-xs font-medium text-amber-400 hover:bg-amber-500/20"
+                >
+                  {activeEntry.contests?.name || "Active Competition"}
+                </Link>
+                <span className="flex items-center gap-1 text-sm text-zinc-400">
+                  <Heart className="size-3.5 text-amber-500" />
+                  <strong className="text-white">{totalVotes.toLocaleString()}</strong> votes
+                </span>
+              </div>
+            )}
 
-        {/* Stats row */}
-        <div className="mb-10 grid grid-cols-3 gap-3 sm:grid-cols-3">
-          {[
-            { label: "Votes", value: totalVotes.toLocaleString(), icon: Heart },
-            { label: "Content", value: (publicContent.length + privateContentCount).toString(), icon: ImageIcon },
-            { label: "Competitions", value: entries.length.toString(), icon: Trophy },
-          ].map((stat) => (
-            <div key={stat.label} className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-4 text-center">
-              <stat.icon className="mx-auto mb-1.5 size-4 text-amber-500" />
-              <div className="text-xl font-bold">{stat.value}</div>
-              <div className="text-[11px] text-zinc-500">{stat.label}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* VOTE FOR ME — the main CTA */}
-        {activeEntry && (
-          <section className="mb-12">
-            <div className="overflow-hidden rounded-2xl border border-amber-500/30 bg-gradient-to-br from-amber-500/10 via-amber-900/5 to-black">
-              <div className="p-8 text-center sm:p-10">
-                <Heart className="mx-auto mb-4 size-14 text-amber-500" />
-                <h2 className="mb-2 text-3xl font-bold sm:text-4xl">
-                  Vote for {displayName}
-                </h2>
-                <p className="mb-1 text-zinc-400">
-                  Each $5 token = 5 votes. {displayName} earns $1 from every token you spend.
-                </p>
-                <p className="mb-8 text-sm text-zinc-500">
-                  Max 20 tokens (100 votes) per day per contestant
-                </p>
-
-                {/* Token selector */}
-                <div className="mx-auto mb-6 flex max-w-xs items-center justify-center gap-4">
+            {/* ===== VOTE FOR ME NOW ===== */}
+            {activeEntry && (
+              <div className="mt-6 w-full max-w-sm">
+                <div className="mb-3 flex items-center justify-center gap-3 sm:justify-start">
                   <button
                     onClick={() => setTokenCount(Math.max(1, tokenCount - 1))}
-                    className="flex size-10 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition-colors hover:border-amber-500 hover:text-amber-500"
+                    className="flex size-8 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 hover:border-amber-500 hover:text-amber-400"
                   >
-                    <Minus className="size-4" />
+                    <Minus className="size-3.5" />
                   </button>
                   <div className="text-center">
-                    <div className="text-4xl font-bold text-amber-500">{tokenCount}</div>
-                    <div className="text-xs text-zinc-500">
-                      {tokenCount === 1 ? "token" : "tokens"} = {tokenCount * 5} votes
-                    </div>
-                    <div className="text-xs text-zinc-600">${tokenCount * 5}</div>
+                    <span className="text-2xl font-bold text-amber-500">{tokenCount}</span>
+                    <span className="ml-1.5 text-xs text-zinc-500">{tokenCount === 1 ? "token" : "tokens"} = {tokenCount * 5} votes</span>
                   </div>
                   <button
                     onClick={() => setTokenCount(Math.min(20, tokenCount + 1))}
-                    className="flex size-10 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 transition-colors hover:border-amber-500 hover:text-amber-500"
+                    className="flex size-8 items-center justify-center rounded-full border border-zinc-700 text-zinc-400 hover:border-amber-500 hover:text-amber-400"
                   >
-                    <Plus className="size-4" />
+                    <Plus className="size-3.5" />
                   </button>
                 </div>
 
-                {/* Quick-select buttons */}
-                <div className="mx-auto mb-6 flex max-w-sm flex-wrap justify-center gap-2">
+                <div className="mb-3 flex justify-center gap-1.5 sm:justify-start">
                   {[1, 5, 10, 20].map((n) => (
                     <button
                       key={n}
                       onClick={() => setTokenCount(n)}
-                      className={`rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                      className={`rounded-full px-3 py-1 text-xs font-medium transition-colors ${
                         tokenCount === n
                           ? "bg-amber-500 text-black"
-                          : "border border-zinc-700 text-zinc-400 hover:border-amber-500/50 hover:text-amber-400"
+                          : "border border-zinc-700 text-zinc-500 hover:border-amber-500/50 hover:text-amber-400"
                       }`}
                     >
-                      {n} {n === 1 ? "token" : "tokens"}
+                      {n}
                     </button>
                   ))}
                 </div>
 
                 <Button
-                  size="lg"
-                  className="h-14 bg-amber-500 px-12 text-lg font-bold text-black hover:bg-amber-400"
+                  className="h-14 w-full bg-amber-500 text-lg font-bold text-black hover:bg-amber-400"
                   onClick={() => handleVote(activeEntry)}
                   disabled={voting}
                 >
-                  {voting ? (
-                    <Loader2 className="size-5 animate-spin" />
-                  ) : (
-                    <Heart className="size-5" />
-                  )}
-                  Vote Now — {tokenCount * 5} Votes
+                  {voting ? <Loader2 className="size-5 animate-spin" /> : <Heart className="size-5" />}
+                  Vote for Me Now
                 </Button>
 
-                {voteMessage && (
-                  <div
-                    className={`mt-6 rounded-xl border px-4 py-3 text-sm ${
-                      voteMessage.type === "success"
-                        ? "border-green-500/30 bg-green-500/10 text-green-400"
-                        : "border-red-500/30 bg-red-500/10 text-red-400"
-                    }`}
-                  >
-                    {voteMessage.text}
-                    {voteMessage.text.includes("log in") && (
-                      <Link href="/login" className="ml-2 underline">Log in</Link>
-                    )}
-                    {voteMessage.text.includes("tokens") && (
-                      <Link href="/dashboard/tokens" className="ml-2 underline">Buy Tokens</Link>
-                    )}
+                {voteMsg && (
+                  <div className={`mt-3 rounded-lg px-3 py-2 text-center text-sm ${
+                    voteMsg.type === "ok" ? "bg-green-500/10 text-green-400" : "bg-red-500/10 text-red-400"
+                  }`}>
+                    {voteMsg.text}
+                    {voteMsg.text.includes("log in") && <Link href="/login" className="ml-2 underline">Log in</Link>}
+                    {voteMsg.text.includes("tokens") && <Link href="/account/tokens" className="ml-2 underline">Buy Tokens</Link>}
                   </div>
                 )}
-              </div>
-            </div>
-          </section>
-        )}
 
-        {/* Prize info */}
-        <div className="mb-12 grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-5">
-            <div className="mb-2 flex items-center gap-2">
-              <Plane className="size-5 text-amber-500" />
-              <h4 className="font-semibold text-amber-400">Top 3 — Vegas Trip</h4>
-            </div>
-            <p className="text-sm text-zinc-400">
-              All 3 finalists fly to Vegas with a +1 for 3 nights. Travel, hotel, and meals paid. Professional photo &amp; video shoot for the final round.
-            </p>
-          </div>
-          <div className="rounded-xl border border-yellow-500/20 bg-yellow-500/5 p-5">
-            <div className="mb-2 flex items-center gap-2">
-              <Crown className="size-5 text-yellow-400" />
-              <h4 className="font-semibold text-yellow-400">Grand Prize — $10,000 + Italy</h4>
-            </div>
-            <p className="text-sm text-zinc-400">
-              The winner gets a 7-day Italy vacation for two (flight + hotel paid) plus $10,000 cash.
-            </p>
+                <div className="mt-2 flex justify-center sm:justify-start">
+                  <SocialShare
+                    url={profileUrl}
+                    title={`Vote for ${name} in Built by Nature!`}
+                    contestantName={name}
+                    contestName={activeEntry.contests?.name}
+                  />
+                </div>
+              </div>
+            )}
+
+            {!activeEntry && (
+              <div className="mt-6 rounded-lg border border-zinc-800 bg-zinc-900/50 px-4 py-3 text-sm text-zinc-500">
+                Not currently competing. <Link href="/contests" className="text-amber-400 hover:underline">Browse competitions</Link>
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Contest entries list */}
-        {entries.length > 0 && (
-          <section className="mb-12">
-            <h2 className="mb-6 text-xl font-bold">Competition History</h2>
-            <div className="space-y-3">
-              {entries.map((entry) => (
-                <div
-                  key={entry.id}
-                  className="flex items-center gap-4 rounded-xl border border-zinc-800 bg-zinc-900/50 p-4"
+        {/* ============ PHOTO GALLERY ============ */}
+        {publicContent.length > 0 && (
+          <section className="mb-10">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {publicContent.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => setLightboxItem(item)}
+                  className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-zinc-800 focus:outline-none focus:ring-2 focus:ring-amber-500"
                 >
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      {entry.contests ? (
-                        <Link
-                          href={`/contests/${entry.contests.id}`}
-                          className="font-semibold text-white hover:text-amber-400"
-                        >
-                          {entry.contests.name}
-                        </Link>
-                      ) : (
-                        <span className="font-semibold">Contest</span>
-                      )}
-                      <Badge
-                        className={`text-[10px] px-1.5 py-0 ${
-                          entry.status === "active"
-                            ? "bg-green-500/20 text-green-400 border-green-500/30"
-                            : entry.status === "eliminated"
-                            ? "bg-red-500/20 text-red-400 border-red-500/30"
-                            : entry.status === "winner"
-                            ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/30"
-                            : "bg-zinc-500/20 text-zinc-400 border-zinc-500/30"
-                        }`}
-                      >
-                        {entry.status}
-                      </Badge>
+                  {item.type === "video" && item.public_url ? (
+                    <video src={item.public_url} className="size-full object-cover" muted playsInline />
+                  ) : item.public_url ? (
+                    <Image src={item.public_url} alt={item.caption || "Photo"} fill className="object-cover transition-transform duration-300 group-hover:scale-105" />
+                  ) : (
+                    <div className="flex size-full items-center justify-center bg-zinc-900">
+                      <ImageIcon className="size-6 text-zinc-700" />
                     </div>
-                    <div className="mt-1 flex items-center gap-3 text-xs text-zinc-500">
-                      <span className="flex items-center gap-1">
-                        <Heart className="size-3 text-amber-500" />
-                        {entry.vote_count.toLocaleString()} votes
-                      </span>
-                      {entry.current_round > 0 && entry.contests && (
-                        <span>Round {entry.current_round} of {entry.contests.total_rounds}</span>
-                      )}
+                  )}
+                  <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/20" />
+                  {item.type === "video" && (
+                    <div className="absolute left-2 top-2 flex items-center gap-1 rounded-full bg-black/60 px-1.5 py-0.5 text-[9px] font-medium text-white">
+                      <Play className="size-2" /> VIDEO
                     </div>
-                  </div>
-                </div>
+                  )}
+                </button>
               ))}
             </div>
           </section>
         )}
-
-        {/* Public gallery with social share on each item */}
-        <section className="mb-12">
-          <h2 className="mb-6 text-xl font-bold">
-            Gallery
-            {publicContent.length > 0 && (
-              <span className="ml-2 text-base font-normal text-zinc-500">
-                ({publicContent.length})
-              </span>
-            )}
-          </h2>
-          {publicContent.length === 0 ? (
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-12 text-center">
-              <ImageIcon className="mx-auto mb-3 size-10 text-zinc-600" />
-              <p className="text-zinc-500">No public content yet.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {publicContent.map((item) => (
-                <div
-                  key={item.id}
-                  className="group relative aspect-[3/4] overflow-hidden rounded-xl border border-zinc-800"
-                >
-                  {item.type === "video" && item.public_url ? (
-                    <video
-                      src={item.public_url}
-                      className="size-full object-cover"
-                      muted
-                      playsInline
-                      onMouseEnter={(e) => (e.target as HTMLVideoElement).play()}
-                      onMouseLeave={(e) => {
-                        const v = e.target as HTMLVideoElement;
-                        v.pause();
-                        v.currentTime = 0;
-                      }}
-                    />
-                  ) : item.public_url ? (
-                    <Image
-                      src={item.public_url}
-                      alt={item.caption || "Content"}
-                      fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
-                  ) : (
-                    <div className="flex size-full items-center justify-center bg-zinc-900">
-                      <ImageIcon className="size-8 text-zinc-700" />
-                    </div>
-                  )}
-
-                  {/* Hover overlay with share */}
-                  <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100">
-                    <div className="flex w-full items-center justify-between p-3">
-                      <span className="truncate text-xs text-white/80">
-                        {item.caption || ""}
-                      </span>
-                      <SocialShare
-                        url={profileUrl}
-                        title={item.caption || `Check out ${displayName} on Built by Nature!`}
-                        contestantName={displayName}
-                        contestName={activeEntry?.contests?.name}
-                      />
-                    </div>
-                  </div>
-
-                  {item.type === "video" && (
-                    <div className="absolute left-3 top-3 flex items-center gap-1 rounded-full bg-black/60 px-2 py-0.5 text-[10px] font-medium text-white backdrop-blur-sm">
-                      <Play className="size-2.5" /> VIDEO
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </section>
 
         {/* Private content teaser */}
         {privateContentCount > 0 && (
-          <section className="mb-12">
-            <h2 className="mb-6 text-xl font-bold">
-              Exclusive Content (18+)
-              <span className="ml-2 text-base font-normal text-zinc-500">
-                ({privateContentCount})
-              </span>
-            </h2>
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
-              {Array.from({ length: Math.min(privateContentCount, 6) }).map((_, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-[3/4] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900"
-                >
+          <section className="mb-10">
+            <div className="grid grid-cols-3 gap-2 sm:gap-3">
+              {Array.from({ length: Math.min(privateContentCount, 3) }).map((_, i) => (
+                <div key={i} className="relative aspect-[3/4] overflow-hidden rounded-xl border border-zinc-800 bg-zinc-900">
                   <div className="absolute inset-0 flex flex-col items-center justify-center">
-                    <Lock className="mb-3 size-8 text-amber-500" />
-                    <span className="text-sm font-semibold">18+ Content</span>
-                    <span className="mt-1 text-xs text-zinc-400">Verify Age to View</span>
+                    <Lock className="mb-2 size-6 text-amber-500" />
+                    <span className="text-xs font-semibold">18+</span>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="mt-4 text-center">
+            <div className="mt-3 text-center">
               <Link href="/signup/fan">
-                <Button className="bg-amber-500 text-black hover:bg-amber-400">
-                  <Lock className="size-4" />
-                  Sign Up to Unlock
+                <Button size="sm" className="bg-amber-500 text-black hover:bg-amber-400">
+                  <Lock className="size-3.5" /> Sign Up to Unlock
                 </Button>
               </Link>
             </div>
           </section>
         )}
 
-        {/* Earnings transparency */}
-        <div className="mb-12 rounded-xl border border-green-500/20 bg-green-500/5 p-6">
-          <div className="flex items-start gap-4">
-            <DollarSign className="size-7 shrink-0 text-green-400" />
-            <div>
-              <h3 className="mb-1 font-bold text-green-400">
-                Contestants Earn 20% of Every Vote
-              </h3>
-              <p className="text-sm text-zinc-400">
-                Each $5 token gives 5 votes. <strong className="text-white">{displayName}</strong> earns{" "}
-                <strong className="text-green-400">$1 per token</strong> you spend. Want to compete?{" "}
-                <Link href="/signup/contestant" className="text-amber-400 hover:underline">
-                  Sign up as a contestant
-                </Link>.
+        {/* ============ WHAT ARE YOU HELPING ME WIN? ============ */}
+        <section className="mb-10">
+          <h2 className="mb-4 text-lg font-bold">What Are You Helping Me Win?</h2>
+
+          <div className="mb-4 rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
+            <p className="text-sm text-zinc-300">
+              <strong className="text-amber-400">{name}</strong> earns{" "}
+              <strong className="text-green-400">20% of every vote</strong> received.
+              Your support directly funds her journey to the crown.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <div className="rounded-xl border border-amber-500/20 bg-zinc-900/50 p-4">
+              <div className="mb-1.5 flex items-center gap-2">
+                <Plane className="size-4 text-amber-500" />
+                <h4 className="text-sm font-semibold text-amber-400">Top 3 — Vegas Trip</h4>
+              </div>
+              <p className="text-xs text-zinc-400">
+                All 3 finalists fly to Vegas with a +1 for 3 nights. Travel, hotel, meals paid. Pro photo &amp; video shoot.
+              </p>
+            </div>
+            <div className="rounded-xl border border-yellow-500/20 bg-zinc-900/50 p-4">
+              <div className="mb-1.5 flex items-center gap-2">
+                <Crown className="size-4 text-yellow-400" />
+                <h4 className="text-sm font-semibold text-yellow-400">Winner — $10K + Italy</h4>
+              </div>
+              <p className="text-xs text-zinc-400">
+                7-day Italy vacation for two (flight + hotel) plus $10,000 cash prize.
               </p>
             </div>
           </div>
-        </div>
-
-        {/* Not competing CTA */}
-        {!activeEntry && (
-          <section className="mb-12">
-            <div className="rounded-xl border border-zinc-800 bg-zinc-900/50 p-8 text-center">
-              <Trophy className="mx-auto mb-4 size-12 text-zinc-600" />
-              <h2 className="mb-2 text-xl font-bold text-zinc-400">
-                Not currently competing
-              </h2>
-              <p className="mb-4 text-sm text-zinc-500">
-                {displayName} is not in an active competition right now. Check back for the next season.
-              </p>
-              <Link href="/contests">
-                <Button variant="outline" className="border-amber-500/30 text-amber-400 hover:bg-amber-500/10">
-                  Browse Competitions
-                </Button>
-              </Link>
-            </div>
-          </section>
-        )}
+        </section>
       </main>
+
+      {/* ============ LIGHTBOX ============ */}
+      {lightboxItem && lightboxItem.public_url && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4"
+          onClick={() => setLightboxItem(null)}
+        >
+          <button
+            className="absolute right-4 top-4 flex size-10 items-center justify-center rounded-full bg-zinc-800 text-white hover:bg-zinc-700"
+            onClick={() => setLightboxItem(null)}
+          >
+            <X className="size-5" />
+          </button>
+
+          <div className="relative flex max-h-[85vh] max-w-lg flex-col items-center" onClick={(e) => e.stopPropagation()}>
+            {lightboxItem.type === "video" ? (
+              <video src={lightboxItem.public_url} className="max-h-[75vh] rounded-xl" controls autoPlay playsInline />
+            ) : (
+              <div className="relative aspect-[3/4] w-full max-w-lg overflow-hidden rounded-xl">
+                <Image src={lightboxItem.public_url} alt={lightboxItem.caption || "Photo"} fill className="object-contain" />
+              </div>
+            )}
+            <div className="mt-3 flex w-full items-center justify-between gap-3">
+              <span className="truncate text-sm text-zinc-400">{lightboxItem.caption || ""}</span>
+              <SocialShare
+                url={profileUrl}
+                title={lightboxItem.caption || `Check out ${name} on Built by Nature!`}
+                contestantName={name}
+                contestName={activeEntry?.contests?.name}
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       <Footer />
     </div>
