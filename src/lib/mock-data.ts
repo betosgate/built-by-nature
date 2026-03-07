@@ -1,0 +1,295 @@
+export const MOCK_CONTESTANTS = [
+  {
+    id: "1",
+    display_name: "Savannah Rose",
+    bio: "Florida girl with a love for the ocean and golden hour. Tattooed and proud. What you see is what you get.",
+    avatar_url: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=200&h=200&fit=crop&crop=face",
+    vote_count: 2847,
+    rank: 1,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p1",
+        url: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop",
+        caption: "Beach day vibes",
+        is_private: false,
+      },
+      {
+        id: "p2",
+        url: "https://images.unsplash.com/photo-1505483531331-fc3cf43fd0c1?w=600&h=800&fit=crop",
+        caption: "Sunset session",
+        is_private: false,
+      },
+      {
+        id: "p3",
+        url: "https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=600&h=800&fit=crop",
+        caption: "Poolside",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "2",
+    display_name: "Mia Ink",
+    bio: "Heavily tattooed and 100% natural. Artist by day, beach bum by night. No filters, no fakes.",
+    avatar_url: "https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?w=200&h=200&fit=crop&crop=face",
+    vote_count: 2231,
+    rank: 2,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p4",
+        url: "https://images.unsplash.com/photo-1539701938214-0d9736e1c16b?w=600&h=800&fit=crop",
+        caption: "Ink and confidence",
+        is_private: false,
+      },
+      {
+        id: "p5",
+        url: "https://images.unsplash.com/photo-1469460340997-2f854421e72f?w=600&h=800&fit=crop",
+        caption: "Summer days",
+        is_private: false,
+      },
+      {
+        id: "p6",
+        url: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop",
+        caption: "Natural glow",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "3",
+    display_name: "Jasmine Kai",
+    bio: "Hawaiian born, naturally blessed. Surfer girl with salt in my hair and sand on my feet. Living my best life.",
+    avatar_url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop&crop=face",
+    vote_count: 1954,
+    rank: 3,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p7",
+        url: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=600&h=800&fit=crop",
+        caption: "Island queen",
+        is_private: false,
+      },
+      {
+        id: "p8",
+        url: "https://images.unsplash.com/photo-1504703395950-b89145a5425b?w=600&h=800&fit=crop",
+        caption: "Paradise found",
+        is_private: false,
+      },
+      {
+        id: "p9",
+        url: "https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=600&h=800&fit=crop",
+        caption: "Golden hour",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "4",
+    display_name: "Luna Blaze",
+    bio: "Texas native with curves for days. Pierced, tatted, and unapologetically me. Born this way, staying this way.",
+    avatar_url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=200&h=200&fit=crop&crop=face",
+    vote_count: 1687,
+    rank: 4,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p10",
+        url: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=600&h=800&fit=crop",
+        caption: "Texas heat",
+        is_private: false,
+      },
+      {
+        id: "p11",
+        url: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&h=800&fit=crop",
+        caption: "City vibes",
+        is_private: false,
+      },
+      {
+        id: "p12",
+        url: "https://images.unsplash.com/photo-1519699047748-de8e457a634e?w=600&h=800&fit=crop",
+        caption: "All natural everything",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "5",
+    display_name: "Aria Waves",
+    bio: "California dreaming. Fitness lover and beach goddess. Stretch marks are my tiger stripes. Real is beautiful.",
+    avatar_url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=face",
+    vote_count: 1423,
+    rank: 5,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p13",
+        url: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&h=800&fit=crop",
+        caption: "Ocean breeze",
+        is_private: false,
+      },
+      {
+        id: "p14",
+        url: "https://images.unsplash.com/photo-1502767089025-6572583495f9?w=600&h=800&fit=crop",
+        caption: "Cali sunshine",
+        is_private: false,
+      },
+      {
+        id: "p15",
+        url: "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&h=800&fit=crop",
+        caption: "Natural beauty",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "6",
+    display_name: "Zara Storm",
+    bio: "NYC model going natural. No more industry pressure — just me, my piercings, and my confidence. Built different.",
+    avatar_url: "https://images.unsplash.com/photo-1496440737103-cd596325d314?w=200&h=200&fit=crop&crop=face",
+    vote_count: 1198,
+    rank: 6,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p16",
+        url: "https://images.unsplash.com/photo-1496440737103-cd596325d314?w=600&h=800&fit=crop",
+        caption: "City girl energy",
+        is_private: false,
+      },
+      {
+        id: "p17",
+        url: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&h=800&fit=crop",
+        caption: "Confidence is key",
+        is_private: false,
+      },
+      {
+        id: "p18",
+        url: "https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?w=600&h=800&fit=crop",
+        caption: "Rooftop vibes",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "7",
+    display_name: "Dakota Reed",
+    bio: "Southern charm meets wild spirit. Mudding trucks and bikinis are my thing. 100% real from head to toe.",
+    avatar_url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face",
+    vote_count: 987,
+    rank: 7,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p19",
+        url: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&h=800&fit=crop",
+        caption: "Country strong",
+        is_private: false,
+      },
+      {
+        id: "p20",
+        url: "https://images.unsplash.com/photo-1464863979621-258859e62245?w=600&h=800&fit=crop",
+        caption: "Lakeside",
+        is_private: false,
+      },
+    ],
+  },
+  {
+    id: "8",
+    display_name: "Valentina Cruz",
+    bio: "Miami heat. Cuban roots, natural curves. Dancing salsa in a bikini is my cardio. Embrace your body.",
+    avatar_url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=200&h=200&fit=crop&crop=face",
+    vote_count: 876,
+    rank: 8,
+    contests_entered: 1,
+    photos: [
+      {
+        id: "p21",
+        url: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=800&fit=crop",
+        caption: "Miami fire",
+        is_private: false,
+      },
+      {
+        id: "p22",
+        url: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=600&h=800&fit=crop",
+        caption: "Beach queen",
+        is_private: false,
+      },
+    ],
+  },
+];
+
+export const MOCK_CONTEST = {
+  id: "built-by-nature-season-1",
+  name: "Built by Nature: Season 1",
+  description:
+    "The inaugural Built by Nature contest celebrating women who embrace their natural beauty. No cosmetic enhancements — just real, raw, authentic beauty. Tattoos, piercings, scars, and stretch marks are all welcome. This is where real wins.",
+  status: "pre_registration" as const,
+  current_round: 0,
+  total_rounds: 4,
+  entry_deadline: "2026-04-15T23:59:59Z",
+  contest_start_date: "2026-05-01T00:00:00Z",
+  pre_registration_open: true,
+  entrants_count: MOCK_CONTESTANTS.length,
+  cover_image_url:
+    "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920&h=600&fit=crop",
+  prizes: {
+    top3: {
+      title: "Top 3 Finalists — Vegas Experience",
+      description:
+        "The top 3 finalists will be flown to Las Vegas with one person of their choice for 3 nights — travel, hotel, and full meals paid. Each finalist receives a professional photo and video shoot, which will be used in the final round to determine the Grand Prize Winner.",
+    },
+    grand_prize: {
+      title: "Grand Prize — Built by Nature Queen",
+      description:
+        "The Grand Prize Winner receives $10,000 cash, is crowned the Built by Nature Queen, and wins a one-week all-expenses-paid vacation to Italy for two (flight and hotel included).",
+    },
+  },
+  rounds: [
+    {
+      number: 1,
+      name: "Open Entry",
+      status: "active" as string,
+      advancement_count: 20,
+      start_date: "2026-03-01",
+      end_date: "2026-04-15",
+    },
+    {
+      number: 2,
+      name: "Top 20",
+      status: "pending" as string,
+      advancement_count: 3,
+      start_date: "2026-04-16",
+      end_date: "2026-05-15",
+    },
+    {
+      number: 3,
+      name: "Top 3 — Vegas Finale",
+      status: "pending" as string,
+      advancement_count: 1,
+      start_date: "2026-05-20",
+      end_date: "2026-06-15",
+    },
+    {
+      number: 4,
+      name: "Grand Prize — The Crowning",
+      status: "pending" as string,
+      advancement_count: 1,
+      start_date: "2026-06-20",
+      end_date: "2026-06-30",
+    },
+  ],
+};
+
+export const MOCK_VOTER_INSIGHTS = [
+  { name: "Jake M.", votes: 42, total_spent: 42, last_vote: "2026-03-06" },
+  { name: "Chris T.", votes: 35, total_spent: 35, last_vote: "2026-03-07" },
+  { name: "Alex R.", votes: 28, total_spent: 28, last_vote: "2026-03-05" },
+  { name: "Marcus D.", votes: 20, total_spent: 20, last_vote: "2026-03-07" },
+  { name: "Ryan K.", votes: 18, total_spent: 18, last_vote: "2026-03-04" },
+  { name: "Brandon W.", votes: 15, total_spent: 15, last_vote: "2026-03-07" },
+  { name: "Tyler J.", votes: 12, total_spent: 12, last_vote: "2026-03-03" },
+  { name: "Danny L.", votes: 8, total_spent: 8, last_vote: "2026-03-06" },
+];
