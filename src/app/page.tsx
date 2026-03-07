@@ -26,28 +26,32 @@ export default function HomePage() {
 
   const calendarPhases = [
     {
-      months: "Jan \u2013 Mar",
-      name: "Summer Enrollment",
-      description: "Sign up, build your profile, and prepare for the summer competition.",
-      active: currentMonth >= 0 && currentMonth <= 2,
-    },
-    {
       months: "Apr \u2013 Jun",
-      name: "Summer Competition",
-      description: "Three rounds of competition. 90 days. One winner crowned.",
+      name: "Summer Enrollment",
+      description: "Sign up, build your profile, and prepare for the summer competition starting in July.",
       active: currentMonth >= 3 && currentMonth <= 5,
+      overlap: null,
     },
     {
       months: "Jul \u2013 Sep",
-      name: "Winter Enrollment",
-      description: "Registration opens for the winter season. Get your spot early.",
+      name: "Summer Competition",
+      description: "Three rounds of summer competition. 90 days. One winner crowned.",
       active: currentMonth >= 6 && currentMonth <= 8,
+      overlap: "Winter Enrollment Open",
     },
     {
       months: "Oct \u2013 Dec",
       name: "Winter Competition",
-      description: "The winter season heats up. New contestants, new prizes, same format.",
+      description: "Three rounds of winter competition. New contestants, new prizes, same format.",
       active: currentMonth >= 9 && currentMonth <= 11,
+      overlap: null,
+    },
+    {
+      months: "Jan \u2013 Mar",
+      name: "Off-Season",
+      description: "Winners celebrated. Prizes awarded. Rest up \u2014 summer enrollment opens in April.",
+      active: currentMonth >= 0 && currentMonth <= 2,
+      overlap: null,
     },
   ];
 
@@ -66,7 +70,7 @@ export default function HomePage() {
             <div>
               <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 mb-6 text-sm px-4 py-1.5">
                 <Flame className="h-3.5 w-3.5 mr-1.5" />
-                Enrollment Open &mdash; Competition Starts April 1
+                Enrollment Open &mdash; Competition Starts July 1
               </Badge>
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight mb-6">
@@ -83,7 +87,7 @@ export default function HomePage() {
 
               <div className="mb-8">
                 <p className="text-sm text-zinc-500 mb-3 uppercase tracking-wider font-medium">Competition starts in</p>
-                <CountdownTimer targetDate="2026-04-01T00:00:00" />
+                <CountdownTimer targetDate="2026-07-01T00:00:00" />
               </div>
 
               <div className="flex flex-col sm:flex-row gap-4 mb-10">
@@ -187,7 +191,7 @@ export default function HomePage() {
               <span className="mx-2 text-amber-500">&mdash;</span>
               <span className="text-amber-400">Enrollment Open</span>
               <span className="mx-2 text-amber-500">&mdash;</span>
-              Competition starts April 1, 2026
+              Competition starts July 1, 2026
             </p>
           </div>
         </div>
@@ -201,7 +205,7 @@ export default function HomePage() {
               The Competition Calendar
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Two seasons per year. Each season features an enrollment period followed by a 90-day competition.
+              Two seasons per year. Enrollment overlaps with the previous competition so you never have to wait.
             </p>
           </div>
 
@@ -224,8 +228,13 @@ export default function HomePage() {
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {phase.description}
                 </p>
+                {phase.overlap && (
+                  <Badge className="bg-purple-500/20 text-purple-400 border-purple-500/30 mt-3 text-xs">
+                    {phase.overlap}
+                  </Badge>
+                )}
                 {phase.active && (
-                  <Badge className="bg-amber-500 text-black border-none mt-4 text-xs font-bold">
+                  <Badge className="bg-amber-500 text-black border-none mt-3 text-xs font-bold">
                     Current Phase
                   </Badge>
                 )}
@@ -603,7 +612,7 @@ export default function HomePage() {
             Competition
           </h2>
           <p className="text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-            Enrollment is open now. The competition begins April 1. Don&apos;t miss your chance to compete for incredible prizes.
+            Enrollment is open now. The summer competition begins July 1. Don&apos;t miss your chance to compete for incredible prizes.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/signup/contestant">

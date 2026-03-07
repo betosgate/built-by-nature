@@ -29,7 +29,7 @@ export async function POST() {
         status: "open" as const,
         current_round: 0,
         total_rounds: 3,
-        entry_deadline: new Date("2026-03-31T23:59:59Z").toISOString(),
+        entry_deadline: new Date("2026-06-30T23:59:59Z").toISOString(),
         prizes_description: "Top 3: All-expenses-paid Vegas trip for the final round. Grand Prize Winner: 7-day Italy vacation for two + $10,000 cash.",
         cover_image_url: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=600&fit=crop",
       },

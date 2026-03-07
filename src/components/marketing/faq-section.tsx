@@ -6,7 +6,7 @@ import { ChevronDown, HelpCircle } from "lucide-react";
 const faqs = [
   {
     q: "How does the competition work?",
-    a: "Each season runs for 90 days across three rounds. In Round 1, all contestants compete and the top 30 advance. In Round 2, the top 3 are selected. In the Finale, votes determine the winner who takes home the grand prize.",
+    a: "Each season runs for 90 days across three rounds. Summer enrollment is April\u2013June with the competition running July\u2013September. Winter enrollment is July\u2013September with the competition running October\u2013December. Enrollment overlaps with the previous competition so there\u2019s always action. In Round 1, all contestants compete and the top 30 advance. In Round 2, the top 3 are selected. In the Finale, votes determine the winner.",
   },
   {
     q: "How do contestants earn money?",
