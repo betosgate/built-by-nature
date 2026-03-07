@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
       .order("created_at", { ascending: false });
 
     if (status) {
-      query = query.eq("status", status);
+      query = query.eq("status", status as "draft" | "open" | "in_progress" | "completed");
     }
 
     const { data: contests, error } = await query;
