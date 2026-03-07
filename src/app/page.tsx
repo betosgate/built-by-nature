@@ -37,19 +37,19 @@ export default function HomePage() {
       name: "Summer Competition",
       description: "Three rounds of summer competition. 90 days. One winner crowned.",
       active: currentMonth >= 6 && currentMonth <= 8,
-      overlap: "Winter Enrollment Open",
+      overlap: null,
     },
     {
       months: "Oct \u2013 Dec",
-      name: "Winter Competition",
-      description: "Three rounds of winter competition. New contestants, new prizes, same format.",
+      name: "Winter Enrollment",
+      description: "Registration opens for the winter season. Sign up and get ready for January.",
       active: currentMonth >= 9 && currentMonth <= 11,
       overlap: null,
     },
     {
       months: "Jan \u2013 Mar",
-      name: "Off-Season",
-      description: "Winners celebrated. Prizes awarded. Rest up \u2014 summer enrollment opens in April.",
+      name: "Winter Competition",
+      description: "Three rounds of winter competition. New contestants, new prizes, same format.",
       active: currentMonth >= 0 && currentMonth <= 2,
       overlap: null,
     },
@@ -205,7 +205,7 @@ export default function HomePage() {
               The Competition Calendar
             </h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Two seasons per year. Enrollment overlaps with the previous competition so you never have to wait.
+              Two seasons per year. Each season has a 3-month enrollment period followed by a 90-day competition.
             </p>
           </div>
 
