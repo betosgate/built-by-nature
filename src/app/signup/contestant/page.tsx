@@ -123,7 +123,7 @@ export default function ContestantSignupPage() {
   // Success state — full page
   if (success) {
     return (
-      <div className="fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center bg-black px-4 text-center overflow-y-auto">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-black px-4 text-center">
         <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
           <UserPlus className="h-10 w-10 text-green-400" />
         </div>
@@ -146,7 +146,7 @@ export default function ContestantSignupPage() {
   }
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-black text-white">
+    <div className="min-h-screen bg-black text-white">
       {/* Top bar */}
       <div className="border-b border-white/10 bg-black/80 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
