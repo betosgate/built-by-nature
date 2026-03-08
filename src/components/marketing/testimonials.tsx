@@ -48,9 +48,9 @@ export function Testimonials() {
   const t = testimonials[activeIndex];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-zinc-950 to-black">
+    <section className="py-12 bg-gradient-to-b from-zinc-950 to-black">
       <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center">
           <h2 className="text-3xl font-bold sm:text-4xl">
             Hear From Past Winners
           </h2>

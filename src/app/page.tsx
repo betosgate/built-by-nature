@@ -64,7 +64,7 @@ export default function HomePage() {
         {/* Subtle radial glow */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-amber-900/20 via-transparent to-transparent" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-24">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left - Text content */}
             <div>
@@ -182,7 +182,7 @@ export default function HomePage() {
       <StatsBar />
 
       {/* ===== WHAT IS BUILT BY NATURE? ===== */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="py-12 bg-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent" />
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
@@ -232,9 +232,9 @@ export default function HomePage() {
       </section>
 
       {/* ===== SECTION 3: ANNUAL TIMELINE / COMPETITION CALENDAR ===== */}
-      <section className="py-24 bg-gradient-to-b from-black to-zinc-950">
+      <section className="py-12 bg-gradient-to-b from-black to-zinc-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-5xl font-bold mb-4">
               The Competition Calendar
             </h2>
@@ -279,11 +279,11 @@ export default function HomePage() {
       </section>
 
       {/* ===== SECTION 4: THE FORMAT — 3-ROUND ELIMINATION ===== */}
-      <section className="py-24 bg-zinc-950 relative overflow-hidden">
+      <section className="py-12 bg-zinc-950 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-amber-900/10 via-transparent to-transparent" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <Badge className="bg-amber-500/20 text-amber-400 border-amber-500/30 mb-4">
               <Trophy className="h-3 w-3 mr-1" /> 3-Round Elimination
             </Badge>
@@ -296,7 +296,7 @@ export default function HomePage() {
           </div>
 
           {/* Three round cards */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 max-w-5xl mx-auto mb-16 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 max-w-5xl mx-auto mb-8 items-stretch">
             {/* Round 1 */}
             <div className="bg-white/5 border border-white/10 rounded-2xl md:rounded-r-none p-8 text-center hover:bg-white/10 transition-colors relative">
               <div className="w-16 h-16 bg-amber-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
@@ -406,9 +406,9 @@ export default function HomePage() {
       </section>
 
       {/* ===== SECTION 5: CONTESTANT PHOTO FEED ===== */}
-      <section className="py-24 bg-gradient-to-b from-zinc-950 to-black">
+      <section className="py-12 bg-gradient-to-b from-zinc-950 to-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-6">
             <h2 className="text-3xl sm:text-4xl font-bold">
               See Who&apos;s Competing
             </h2>
@@ -453,9 +453,9 @@ export default function HomePage() {
       </section>
 
       {/* ===== SECTION 6: THREE PATHS ===== */}
-      <section className="py-24 bg-black">
+      <section className="py-12 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-5xl font-bold mb-4">
               Three Ways to Participate
             </h2>
@@ -520,7 +520,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== SECTION 7: EARNINGS BREAKDOWN ===== */}
-      <section className="py-24 bg-gradient-to-b from-black to-zinc-950 relative overflow-hidden">
+      <section className="py-12 bg-gradient-to-b from-black to-zinc-950 relative overflow-hidden">
         {/* Subtle background photo */}
         <div className="absolute inset-0">
           <Image
@@ -533,7 +533,7 @@ export default function HomePage() {
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">
               Everyone Earns
             </h2>
@@ -622,7 +622,7 @@ export default function HomePage() {
       <FAQSection />
 
       {/* ===== SECTION 8: FINAL CTA ===== */}
-      <section className="py-24 bg-black relative overflow-hidden">
+      <section className="py-12 bg-black relative overflow-hidden">
         {/* Background collage effect */}
         <div className="absolute inset-0 grid grid-cols-4 gap-1 opacity-10">
           {contestantImages.concat(contestantImages.slice(0, 2)).map((img, i) => (

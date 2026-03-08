@@ -55,7 +55,7 @@ const stats: Stat[] = [
 
 export function StatsBar() {
   return (
-    <section className="border-y border-white/5 bg-zinc-950 py-16">
+    <section className="border-y border-white/5 bg-zinc-950 py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           {stats.map((stat) => {

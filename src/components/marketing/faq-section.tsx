@@ -38,9 +38,9 @@ export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
-    <section className="py-24 bg-black">
+    <section className="py-12 bg-black">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 text-center">
+        <div className="mb-8 text-center">
           <div className="mb-4 inline-flex items-center gap-2">
             <HelpCircle className="size-5 text-amber-500" />
             <span className="text-sm font-semibold uppercase tracking-widest text-amber-500">
