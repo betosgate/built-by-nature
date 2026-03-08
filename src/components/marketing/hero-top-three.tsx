@@ -47,36 +47,52 @@ export function HeroTopThree() {
   return (
     <div className="hidden lg:block relative">
       <div className="grid grid-cols-2 gap-4">
-        {/* Tall left image — #1 contestant */}
-        <Link
-          href={hasReal ? `/contestant/${top3[0].id}` : "/contestants"}
-          className="group relative aspect-[3/5] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10"
-        >
-          <Image
-            src={hasReal ? top3[0].avatar_url! : fallbackImages[0]}
-            alt={hasReal ? top3[0].name : "Featured contestant"}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-105"
-            priority
-            sizes="300px"
-          />
-          <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-4">
-            <Badge className="bg-yellow-500 text-black border-none mb-1.5 font-bold">
-              <Crown className="h-3 w-3 mr-1" /> #1
-            </Badge>
-            {hasReal && (
-              <>
-                <p className="text-sm font-semibold text-white truncate">{top3[0].name}</p>
-                <div className="flex items-center gap-1 mt-0.5">
-                  <Heart className="size-3 text-amber-500 fill-amber-500" />
-                  <span className="text-xs text-zinc-400">{top3[0].votes.toLocaleString()} votes</span>
-                </div>
-              </>
-            )}
-          </div>
-        </Link>
+        {/* Left column — #1 image + "Our Current Top Three" text */}
+        <div className="flex flex-col gap-4">
+          <Link
+            href={hasReal ? `/contestant/${top3[0].id}` : "/contestants"}
+            className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10"
+          >
+            <Image
+              src={hasReal ? top3[0].avatar_url! : fallbackImages[0]}
+              alt={hasReal ? top3[0].name : "Featured contestant"}
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              priority
+              sizes="300px"
+            />
+            <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-4">
+              <Badge className="bg-yellow-500 text-black border-none mb-1.5 font-bold">
+                <Crown className="h-3 w-3 mr-1" /> #1
+              </Badge>
+              {hasReal && (
+                <>
+                  <p className="text-sm font-semibold text-white truncate">{top3[0].name}</p>
+                  <div className="flex items-center gap-1 mt-0.5">
+                    <Heart className="size-3 text-amber-500 fill-amber-500" />
+                    <span className="text-xs text-zinc-400">{top3[0].votes.toLocaleString()} votes</span>
+                  </div>
+                </>
+              )}
+            </div>
+          </Link>
 
-        {/* Right column — #2 and #3 */}
+          {/* Text nestled below #1 */}
+          <div className="rounded-2xl border border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-transparent p-5">
+            <p className="text-xs font-semibold uppercase tracking-widest text-amber-500 mb-1">Live Rankings</p>
+            <p className="text-2xl font-bold leading-tight text-white">
+              Our Current{" "}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
+                Top Three
+              </span>
+            </p>
+            <p className="text-sm text-zinc-400 mt-1">
+              Updated in real time as votes come in.
+            </p>
+          </div>
+        </div>
+
+        {/* Right column — #2 and #3 stacked */}
         <div className="flex flex-col gap-4">
           {[1, 2].map((idx) => {
             const c = hasReal ? top3[idx] : null;
@@ -86,47 +102,36 @@ export function HeroTopThree() {
               <Link
                 key={idx}
                 href={c ? `/contestant/${c.id}` : "/contestants"}
-                className="group relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10"
+                className="group relative flex-1 rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10"
               >
-                <Image
-                  src={c?.avatar_url || fallbackImages[idx]}
-                  alt={c?.name || "Contestant"}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  priority={idx === 1}
-                  sizes="300px"
-                />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3">
-                  <Badge className={`${rank.color} border-none mb-1 text-xs font-bold`}>
-                    <RankIcon className="h-3 w-3 mr-1" /> {rank.label}
-                  </Badge>
-                  {c && (
-                    <>
-                      <p className="text-xs font-semibold text-white truncate">{c.name}</p>
-                      <div className="flex items-center gap-1 mt-0.5">
-                        <Heart className="size-2.5 text-amber-500 fill-amber-500" />
-                        <span className="text-[10px] text-zinc-400">{c.votes.toLocaleString()}</span>
-                      </div>
-                    </>
-                  )}
+                <div className="relative aspect-[3/4] w-full">
+                  <Image
+                    src={c?.avatar_url || fallbackImages[idx]}
+                    alt={c?.name || "Contestant"}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    priority={idx === 1}
+                    sizes="300px"
+                  />
+                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 to-transparent p-3">
+                    <Badge className={`${rank.color} border-none mb-1 text-xs font-bold`}>
+                      <RankIcon className="h-3 w-3 mr-1" /> {rank.label}
+                    </Badge>
+                    {c && (
+                      <>
+                        <p className="text-xs font-semibold text-white truncate">{c.name}</p>
+                        <div className="flex items-center gap-1 mt-0.5">
+                          <Heart className="size-2.5 text-amber-500 fill-amber-500" />
+                          <span className="text-[10px] text-zinc-400">{c.votes.toLocaleString()}</span>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </Link>
             );
           })}
         </div>
-      </div>
-
-      {/* "Our Current Top 3" label below the #1 image */}
-      <div className="mt-5">
-        <p className="text-2xl font-bold leading-tight text-white">
-          Our Current
-          <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-            Top Three
-          </span>
-          <br />
-          <span className="text-lg font-medium text-zinc-400">Contestants</span>
-        </p>
       </div>
 
       {/* Decorative glow */}
