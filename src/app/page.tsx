@@ -10,6 +10,7 @@ import { CountdownTimer } from "@/components/marketing/countdown-timer";
 import { StatsBar } from "@/components/marketing/stats-bar";
 import { Testimonials } from "@/components/marketing/testimonials";
 import { FAQSection } from "@/components/marketing/faq-section";
+import { HeroTopThree } from "@/components/marketing/hero-top-three";
 
 const contestantImages = [
   { src: "https://images.unsplash.com/photo-1524502397800-2eeaad7c3fe5?w=600&h=800&fit=crop", alt: "Bikini beauty at the beach" },
@@ -125,52 +126,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right - Contestant photos grid (3 photos) */}
-            <div className="hidden lg:block relative">
-              <div className="grid grid-cols-2 gap-4">
-                {/* Tall left image */}
-                <div className="relative aspect-[3/5] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10">
-                  <Image
-                    src={contestantImages[0].src}
-                    alt={contestantImages[0].alt}
-                    fill
-                    className="object-cover"
-                    priority
-                    sizes="300px"
-                  />
-                  <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                    <Badge className="bg-amber-500 text-black border-none mb-2">
-                      <Crown className="h-3 w-3 mr-1" /> Featured
-                    </Badge>
-                  </div>
-                </div>
-                {/* Right column - two stacked images */}
-                <div className="flex flex-col gap-4">
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10">
-                    <Image
-                      src={contestantImages[1].src}
-                      alt={contestantImages[1].alt}
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="300px"
-                    />
-                  </div>
-                  <div className="relative aspect-[3/4] rounded-2xl overflow-hidden shadow-2xl shadow-amber-500/10 border border-white/10">
-                    <Image
-                      src={contestantImages[2].src}
-                      alt={contestantImages[2].alt}
-                      fill
-                      className="object-cover"
-                      sizes="300px"
-                    />
-                  </div>
-                </div>
-              </div>
-              {/* Decorative glow */}
-              <div className="absolute -bottom-10 -right-10 w-64 h-64 bg-amber-500/20 rounded-full blur-3xl" />
-              <div className="absolute -top-10 -left-10 w-48 h-48 bg-orange-500/10 rounded-full blur-3xl" />
-            </div>
+            {/* Right - Top 3 contestants */}
+            <HeroTopThree />
           </div>
         </div>
       </section>
